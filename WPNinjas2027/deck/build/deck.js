@@ -12,6 +12,7 @@ const { icon } = require("./icons");
 const SKILL = process.env.PPTX_SKILL_DIR;   // optional: path to apply_theme.js
 const OUT = path.resolve(__dirname, "../../SlideDecks/Defender for Agents - WPNinjas US 2027.pptx");
 const SITE = "github.com/rod-trent/Conferences/tree/main/WPNinjas2027";
+const DEMO_SITE = "wpninjas2027-demos.vercel.app";
 
 const THEME = {
   name: "WPNinjas Night Desert",
@@ -111,8 +112,9 @@ function kicker(s, text, y = 1.25) { txt(s, text, { x: M, y, w: W - 2 * M, h: 0.
 async function demoSlide(n, title, id, watch, variants, cmd, notes) {
   const s = content(`Demo ${n}  ·  ${title}`, notes);
   pill(s, M, 1.3, "LIVE DEMO", EMBER, 1.3);
-  txt(s, `Runs in the browser: open the demo site and pick "${title}"  ·  or the deep link  ?demo=${id}`,
-    { x: M + 1.45, y: 1.3, w: 10.5, h: 0.32, fontSize: 13, color: MUTED, valign: "middle" });
+  txt(s, [{ text: "Runs in the browser:  ", options: { color: MUTED } },
+          { text: `${DEMO_SITE}/?demo=${id}`, options: { color: STEEL, hyperlink: { url: `https://${DEMO_SITE}/?demo=${id}` } } }],
+    { x: M + 1.45, y: 1.3, w: 10.5, h: 0.32, fontSize: 14, valign: "middle" });
   // Left: what to watch
   card(s, M, 1.9, 7.0, 4.85);
   txt(s, "What to watch", { x: M + 0.35, y: 2.1, w: 6.4, h: 0.4, fontSize: 18, bold: true, color: WHITE });
@@ -759,6 +761,8 @@ client.chat.completions.create(
       { text: "Turn document shields off - the Foundry default - and watch a fraudulent refund get through", options: { bullet: true, breakLine: true } },
       { text: "Reports what it misses on purpose: Crescendo, non-English, a polite injection to an unknown domain", options: { bullet: true } },
     ], { x: 7.8, y: 2.75, w: 4.6, h: 2.6, fontSize: 14, paraSpaceAfter: 6 });
+    txt(s, [{ text: `${DEMO_SITE}/?demo=redteam`, options: { hyperlink: { url: `https://${DEMO_SITE}/?demo=redteam` } } }],
+      { x: 7.8, y: 5.05, w: 4.6, h: 0.35, fontSize: 13, color: STEEL });
     code(s, 7.8, 5.5, 4.6, 0.8, "cd demos/06-red-team-your-agent\npython red_team_agent.py --doc-shields-off", 11);
   }
 
@@ -792,7 +796,9 @@ client.chat.completions.create(
       "~1 min. Everything is in the repo: deck, six demos that run offline with no dependencies, the browser demo site, the KQL, and a sources file listing every Learn page used.");
     s.addImage({ path: path.join(__dirname, "qr-repo.png"), x: M, y: 1.5, w: 3.4, h: 3.4, objectName: "qr-repo" });
     txt(s, [{ text: "github.com/rod-trent/Conferences", options: { breakLine: true } }, { text: "  /tree/main/WPNinjas2027" }], { x: M, y: 5.05, w: 4.1, h: 0.6, fontSize: 13, color: STEEL });
-    txt(s, "Six demos  ·  browser demo site  ·  KQL  ·  every Learn source", { x: M, y: 5.8, w: 4.1, h: 0.6, fontSize: 13, color: MUTED });
+    txt(s, [{ text: "Run the demos in your browser:", options: { color: MUTED, breakLine: true } },
+            { text: DEMO_SITE, options: { color: EMBER, bold: true, hyperlink: { url: "https://" + DEMO_SITE } } }],
+      { x: M, y: 5.8, w: 4.2, h: 0.6, fontSize: 13 });
     const links = [
       ["Threat protection for AI services", "learn.microsoft.com/azure/defender-for-cloud/ai-threat-protection"],
       ["Alerts for AI services", "learn.microsoft.com/azure/defender-for-cloud/alerts-ai-workloads"],

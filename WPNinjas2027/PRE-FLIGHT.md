@@ -47,9 +47,11 @@ matching demo text; `python run-all-tests.py` tells you if the site drifted.
       **recorded output (forced)** and every demo should still play.
 - [ ] Set the text size with `A+` for the back of the room (it is remembered).
 - [ ] Pause mode **at stages** (default). `space` continues, `→` skips to the end.
-- [ ] Deck hyperlinks on the demo slides: point them at your deployed site's
-      `?demo=<id>&v=<n>` links (ids: `shield`, `toolcall`, `endpoint`, `posture`,
-      `hunt`, `redteam`).
+- [ ] Demo slides link to [wpninjas2027-demos.vercel.app](https://wpninjas2027-demos.vercel.app) `?demo=<id>`
+      (ids: `shield`, `toolcall`, `endpoint`, `posture`, `hunt`, `redteam`).
+      Add `&v=<n>` to land on a specific variant.
+- [ ] If you changed a demo: `npx vercel deploy --prod` from `WPNinjas2027/` —
+      the Vercel project is not Git-connected, so a push alone does not redeploy.
 - [ ] Have the terminal fallback ready: every demo runs with `python <script> --fast`.
 
 ## Things to say out loud

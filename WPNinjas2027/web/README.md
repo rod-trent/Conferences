@@ -1,5 +1,7 @@
 # Browser demo site
 
+**Deployed: [wpninjas2027-demos.vercel.app](https://wpninjas2027-demos.vercel.app)**
+
 A static site that runs the six demos **in a browser**, so you can put it beside
 the deck and click through the demos instead of alt-tabbing to a terminal. No
 backend, no build step at deploy time.
@@ -78,15 +80,21 @@ Everything under `public/py`, `public/transcripts` and `public/data` is
 
 ## Deploy (Vercel)
 
-The site is committed pre-built. `WPNinjas2027/vercel.json` points
-`outputDirectory` at `web/public`, so create the Vercel project with
-**Root Directory = `WPNinjas2027`** (the repo holds more than one event).
-`.vercelignore` keeps the deck and build tooling out of the upload.
+The site is committed pre-built and deployed as the Vercel project
+**`wpninjas2027-demos`**, deployed from the CLI. `WPNinjas2027/vercel.json`
+points `outputDirectory` at `web/public`; `.vercelignore` keeps the deck and
+build tooling out of the upload.
+
+To redeploy after changing a demo:
 
 ```bash
 cd WPNinjas2027
+python run-all-tests.py          # rebuild check must be green
 npx vercel deploy --prod
 ```
 
-Then update the demo slides' links and `PRE-FLIGHT.md` with the deployed URL.
-Any static host works the same way — serve `web/public/`.
+The project is not connected to Git, so a push does not redeploy. To make it
+redeploy on every push, connect the repo in the Vercel dashboard with
+**Root Directory = `WPNinjas2027`** (the repo holds more than one event).
+Per-deployment URLs (`…-<hash>-<team>.vercel.app`) sit behind Vercel
+Authentication; the production alias above is public.

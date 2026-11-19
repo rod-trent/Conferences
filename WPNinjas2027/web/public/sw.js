@@ -17,7 +17,7 @@
  * straight through to the cache, so the offline guarantee is unchanged.
  */
 
-var CACHE = 'wpn2027-agents-v1';
+var CACHE = 'wpn2027-agents-v1';   // bump when assets change shape
 var NET_TIMEOUT = 1500;        // ms before we stop waiting and use the cache
 
 var CORE = [

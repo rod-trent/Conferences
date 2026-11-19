@@ -1,6 +1,7 @@
 # Workplace Ninjas US 2027 — Rod Trent
 
 [![WPNinjas US 2027](https://img.shields.io/badge/Workplace%20Ninjas%20US-2027-FF7A2F?style=for-the-badge)](https://workplaceninjas.us/)
+[![Live demos](https://img.shields.io/badge/live%20demos-wpninjas2027--demos.vercel.app-6FB7FF?style=for-the-badge&logo=vercel&logoColor=white)](https://wpninjas2027-demos.vercel.app)
 [![Runs offline](https://img.shields.io/badge/demos-run%20offline-5AD18F?style=for-the-badge)](demos/README.md)
 
 **11–13 January 2027 · The Scott Resort & Spa, Scottsdale, AZ**
@@ -19,7 +20,7 @@ agent runtime protection, including detection of jailbreak and prompt injection
 attacks targeting autonomous workflows.
 
 📊 **Deck:** [`SlideDecks/Defender for Agents - WPNinjas US 2027.pptx`](SlideDecks/) — 33 slides, speaker notes on every one
-📁 **Demos:** [`demos/`](demos/) · 🌐 **Browser demo site:** [`web/`](web/) · 🔎 **KQL:** [`demos/kql/agent-hunting.kql`](demos/kql/agent-hunting.kql)
+📁 **Demos:** [`demos/`](demos/) · 🌐 **Live demo site:** [wpninjas2027-demos.vercel.app](https://wpninjas2027-demos.vercel.app) ([source](web/)) · 🔎 **KQL:** [`demos/kql/agent-hunting.kql`](demos/kql/agent-hunting.kql)
 
 **What you will learn**
 
@@ -60,10 +61,12 @@ Python 3.10+ standard library only.
 
 ### ▶ Run them in a browser
 
+**→ [wpninjas2027-demos.vercel.app](https://wpninjas2027-demos.vercel.app)**
+
 [`web/`](web/) is a static site that runs these demos **in the browser** —
 real Python compiled to WebAssembly (Pyodide), executing in the tab, beside the
 deck. Playback pauses at every `WHY THIS MATTERS` line so you can talk over it;
-each demo's flags are buttons; `?demo=toolcall&v=1` deep-links straight to a
+each demo's flags are buttons; [`?demo=toolcall&v=1`](https://wpninjas2027-demos.vercel.app/?demo=toolcall&v=1) deep-links straight to a
 variant. If the venue network dies it falls back to transcripts baked from the
 same code, and a service worker keeps it working offline once loaded.
 See [`web/README.md`](web/README.md) to run it locally or deploy it.
