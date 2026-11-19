@@ -147,7 +147,14 @@ async function demoSlide(n, title, id, watch, variants, cmd, notes) {
     txt(s, [{ text: "Rod Trent", options: { bold: true, color: WHITE, breakLine: true } },
             { text: "Workplace Ninjas US 2027  ·  Scottsdale, AZ  ·  11–13 January", options: { color: BODY } }],
       { x: M, y: 4.85, w: 8, h: 0.8, fontSize: 18 });
-    s.addNotes("~1 min. Welcome. This is a 60-minute, demo-heavy session: six demos, all of which run in a browser with no tenant, so you can replay every one of them tonight from the repo. The thesis in one line: agents don't just answer, they act - and Microsoft Defender now inspects the action before it happens.");
+    // Demo-site QR, top right, clear of the saguaros in the background art.
+    const tq = 1.9, tx = W - M - tq;
+    s.addImage({ path: path.join(__dirname, "qr-demo-site.png"), x: tx, y: 0.55, w: tq, h: tq, objectName: "qr-demo-site",
+      hyperlink: { url: "https://" + DEMO_SITE } });
+    txt(s, [{ text: "Follow along", options: { bold: true, color: EMBER, breakLine: true } },
+            { text: DEMO_SITE, options: { color: BODY, fontSize: 11, hyperlink: { url: "https://" + DEMO_SITE } } }],
+      { x: tx - 0.3, y: 2.52, w: tq + 0.3, h: 0.6, fontSize: 15, align: "right" });
+    s.addNotes("~1 min. Welcome. Point at the QR code: the demo site runs every demo in the browser, so the room can follow along on their phones. This is a 60-minute, demo-heavy session: six demos, all of which run in a browser with no tenant, so you can replay every one of them tonight from the repo. The thesis in one line: agents don't just answer, they act - and Microsoft Defender now inspects the action before it happens.");
   }
 
   // 2 ── Hook
