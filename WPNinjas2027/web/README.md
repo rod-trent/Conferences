@@ -80,21 +80,23 @@ Everything under `public/py`, `public/transcripts` and `public/data` is
 
 ## Deploy (Vercel)
 
-The site is committed pre-built and deployed as the Vercel project
-**`wpninjas2027-demos`**, deployed from the CLI. `WPNinjas2027/vercel.json`
-points `outputDirectory` at `web/public`; `.vercelignore` keeps the deck and
-build tooling out of the upload.
+The site is committed pre-built. The Vercel project **`wpninjas2027-demos`**
+is connected to `rod-trent/Conferences` with **Root Directory = `WPNinjas2027`**,
+so **every push to `main` redeploys production** (other branches get preview
+deployments). `WPNinjas2027/vercel.json` points `outputDirectory` at
+`web/public` with no build step; `.vercelignore` keeps the deck and tooling out.
 
-To redeploy after changing a demo:
+After changing a demo:
 
 ```bash
 cd WPNinjas2027
-python run-all-tests.py          # rebuild check must be green
-npx vercel deploy --prod
+python web/build.py              # regenerate public/
+python run-all-tests.py          # must be green - the drift check guards the site
+git commit -am "..." && git push # Vercel deploys main
 ```
 
-The project is not connected to Git, so a push does not redeploy. To make it
-redeploy on every push, connect the repo in the Vercel dashboard with
-**Root Directory = `WPNinjas2027`** (the repo holds more than one event).
+A manual deploy still works, but run it from the **repo root** (the project's
+Root Directory is `WPNinjas2027`): `npx vercel deploy --prod`.
+
 Per-deployment URLs (`…-<hash>-<team>.vercel.app`) sit behind Vercel
 Authentication; the production alias above is public.
