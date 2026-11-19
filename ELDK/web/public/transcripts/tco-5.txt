@@ -1,0 +1,16 @@
+[2m==============================================================================[0m
+[1m Demo 06 self-test[0m
+[2m==============================================================================[0m
+
+  [32m[PASS][0m E5 inclusion: 2,000 users -> 800 SCUs/month
+  [32m[PASS][0m E5 inclusion caps at 10,000 SCUs/month
+  [32m[PASS][0m medium: overage = 1,300 - 800 = 500 SCUs/month
+  [32m[PASS][0m medium: overage cost = 500 x $6 x 36
+  [32m[PASS][0m running costs exceed build cost on every profile
+  [32m[PASS][0m at the break-even quote both paths cost the same
+  [32m[PASS][0m no quote -> no invented Perception price
+  [32m[PASS][0m break-even rises with the size of the SOC
+  [32m[PASS][0m sensitivity: maintenance is the biggest lever (medium)
+  [32m[PASS][0m maintenance moves break-even more than build weeks
+
+[32m  10/10 checks passed[0m

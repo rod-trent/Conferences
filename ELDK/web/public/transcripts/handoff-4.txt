@@ -1,0 +1,59 @@
+[2m==============================================================================[0m
+[1m Demo 03 - The Handoff Chain[0m
+[2m Triage -> Investigation -> Detection -> Remediation  ·  no approval gate[0m
+[2m==============================================================================[0m
+[2m  Synthetic data. 'Fabrikam Nordic', its agents, users and incidents are[0m
+[2m  fabricated for teaching. Agent logic here is a deterministic local stand-in[0m
+[2m  for the systems named - it illustrates the flow, it is not the product.[0m
+
+[1m[36mSTEP 1/5  Triage hands off to Investigation[0m[0m
+[2m------------------------------------------------------------------------------[0m
+  [36m[handoff][0m [1mTriage[0m -> [1mInvestigation[0m [2msoc.handoff/v1[0m
+    [2mschema=soc.handoff/v1  incident=INC-4471  version=1  hop=1  from=Triage  to=Investigation[0m
+    [2musers=[0mfreja.nielsen, jonas.berg[2m   evidence=[0mE-1017
+  [32m[PASS][0m receiver validation: envelope accepted
+
+[1m[36mSTEP 2/5  Investigation works the entities it was handed[0m[0m
+[2m------------------------------------------------------------------------------[0m
+  [35m[tool][0m [1mquery SigninLogs[0m [2musers=2, risky sign-ins[0m
+  [35m[tool][0m [1mquery OfficeActivity[0m [2mmailbox and file activity[0m
+  [35m[tool][0m [1mpivot on attacker IPs[0m [2m203.0.113.77, 203.0.113.91[0m
+    - token replay: freja.nielsen from 203.0.113.77
+    - token replay: jonas.berg from 203.0.113.91
+    - New-InboxRule by freja.nielsen: move mail containing 'invoice' to RSS Feeds
+    - FileDownloaded by jonas.berg: Vendor bank details.xlsx
+    - IP pivot: 203.0.113.77, 203.0.113.91 also tried svc-payroll
+  [36m[handoff][0m [1mInvestigation[0m -> [1mDetection Engineering[0m [2mv2, 5 evidence refs[0m
+
+[33m>> WHY THIS MATTERS: [0mEvidence references travel with the claim. The next agent
+   - or a human - can check S-2 and X-1 instead of trusting a summary.
+
+[1m[36mSTEP 3/5  Detection Engineering drafts a rule[0m[0m
+[2m------------------------------------------------------------------------------[0m
+  [2mrule                    [0mAiTM token replay followed by inbox rule
+  [2mstate                   [0mdraft - disabled until back-tested (Demo 04)
+  [36m[handoff][0m [1mDetection Engineering[0m -> [1mPosture Remediation[0m [2mv3[0m
+
+[1m[36mSTEP 4/5  Posture Remediation proposes a plan[0m[0m
+[2m------------------------------------------------------------------------------[0m
+    [[33mhard[0m] revoke sessions + reset password  ->  freja.nielsen
+    [[33mhard[0m] revoke sessions + reset password  ->  jonas.berg
+    [[33mhard[0m] disable user  ->  svc-payroll
+    [[33mhard[0m] CA policy: token protection (Exchange, SharePoint)  ->  Finance + Procurement
+    [[2msoft[0m] block URL indicator  ->  hxxps://kystlogistik-sharepoint.example/board-pack
+
+[1m[36mSTEP 5/5  Execute - no gate[0m[0m
+[2m------------------------------------------------------------------------------[0m
+  [32m[ALLOWED][0m revoke sessions + reset password -> freja.nielsen
+  [32m[ALLOWED][0m revoke sessions + reset password -> jonas.berg
+  [33m[WARN][0m disable user -> svc-payroll  (runs the 02:00 payroll batch for 1,400 employees)
+  [32m[ALLOWED][0m CA policy: token protection (Exchange, SharePoint) -> Finance + Procurement
+  [32m[ALLOWED][0m block URL indicator -> hxxps://kystlogistik-sharepoint.example/board-pack
+
+  [31m[FAIL][0m svc-payroll disabled - runs the 02:00 payroll batch for 1,400 employees
+
+[33m>> WHY THIS MATTERS: [0mThe agent was right that the attacker touched the service
+   account, and wrong about what to do. Scope human approval to the hard
+   actions; that is where judgment lives.
+
+[1m[31mVERDICT: Attacker contained - and payroll fails tonight.[0m[0m

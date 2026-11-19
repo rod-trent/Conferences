@@ -1,0 +1,27 @@
+[2m==============================================================================[0m
+[1m Demo 03 - Two writers, one incident[0m
+[2m Shared mutable state - the concurrent-pattern pitfall[0m
+[2m==============================================================================[0m
+[2m  Synthetic data. 'Fabrikam Nordic', its agents, users and incidents are[0m
+[2m  fabricated for teaching. Agent logic here is a deterministic local stand-in[0m
+[2m  for the systems named - it illustrates the flow, it is not the product.[0m
+
+[1m[36mSTEP 1/2  Last writer wins[0m[0m
+[2m------------------------------------------------------------------------------[0m
+  [2mTriage writes           [0mv2: + jonas.berg
+  [2mInvestigation writes    [0mbased on v1 (no check)
+  [2mincident now            [0mv2  users=freja.nielsen
+  [31m[FAIL][0m jonas.berg is gone from the incident - nobody will investigate him
+
+[33m>> WHY THIS MATTERS: [0mBoth agents were right. The store kept only the later
+   write. Avoid shared mutable state between concurrent agents, or make every
+   write conditional on the version you read.
+
+[1m[36mSTEP 2/2  Same race, with a version check (etag / checkpoint)[0m[0m
+[2m------------------------------------------------------------------------------[0m
+  [2mTriage writes           [0mv2: + jonas.berg
+  [2mInvestigation writes    [0mbased on v1 -> 409 Conflict, re-read v2, write v3
+  [2mincident now            [0mv3  users=freja.nielsen, jonas.berg
+  [32m[PASS][0m conflict detected, re-read, merged - both users and the finding survive
+
+[1m[32mVERDICT: Version every write. It is one integer, and it is the difference.[0m[0m

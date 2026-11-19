@@ -1,0 +1,58 @@
+[2m==============================================================================[0m
+[1m Demo 06 - Build vs. Buy: the Three-Year View[0m
+[2m Small SOC - 600 E5 users, 2 custom agents[0m
+[2m==============================================================================[0m
+[2m  Synthetic data. 'Fabrikam Nordic', its agents, users and incidents are[0m
+[2m  fabricated for teaching. Agent logic here is a deterministic local stand-in[0m
+[2m  for the systems named - it illustrates the flow, it is not the product.[0m
+[2m  Facts from Microsoft; every other number is an assumption in assumptions.json.[0m
+
+[1m[36mSTEP 1/4  Build: what a custom multi-agent SOC costs over three years[0m[0m
+[2m------------------------------------------------------------------------------[0m
+    build                         $30,000  [2m########[0m
+    maintenance                  $108,000  [2m##############################[0m
+    evaluation + red team         $27,000  [2m########[0m
+    on-call for your code         $54,000  [2m###############[0m
+    platform migrations            $9,000  [2m##[0m
+    SCU overage                   $12,960  [2m####[0m
+    [1mtotal[0m                        [1m$240,960[0m
+  [2mSCUs included with E5   [0m240/month  ->  overage 60/month
+
+[33m>> WHY THIS MATTERS: [0mBuilding is 12% of the bill. Running it - maintenance,
+   evaluation, on-call, migrations - is 88%.
+
+[1m[36mSTEP 2/4  Buy: Perception, plus what it does not cover[0m[0m
+[2m------------------------------------------------------------------------------[0m
+    enablement (URBAC, Agent IDs, roles)       $6,000
+    residual custom build                     $15,000
+    residual maintenance                      $54,000
+    residual eval + on-call                   $40,500
+  [2mPerception consumption  [0mno public rate card
+
+[33m>> WHY THIS MATTERS: [0mNo custom playbooks in this release - so anything unique
+   to you (vendor bank-detail fraud, say) stays a custom build on both paths.
+
+[1m[36mSTEP 3/4  Break-even[0m[0m
+[2m------------------------------------------------------------------------------[0m
+    Perception is cheaper if its consumption stays under [1m$3,485/month[0m
+    [2m(three-year build total minus the fixed costs of the buy path, per month)[0m
+
+[33m>> WHY THIS MATTERS: [0mAsk for the number that decides it. The cost calculator
+   and usage dashboard Microsoft announced at Ignite give you the right-hand
+   side of this comparison.
+
+[1m[36mSTEP 4/4  Supportability: what you own at 02:00[0m[0m
+[2m------------------------------------------------------------------------------[0m
+    2 agents (prompts, tools, memory)           [2m1 residual custom agent(s)[0m
+    handoff contract + orchestrator             [2mRBAC, approvals and agent enablement[0m
+    agent identities + permissions              [2mevaluation of the residual agent(s)[0m
+    evaluation suite + red-team corpus          [2m[0m
+    connectors to Defender / Sentinel / Graph   [2m[0m
+    model + API version upgrades                [2m[0m
+    platform migrations                         [2m[0m
+    on-call for all of it                       [2m[0m
+[2m    ^ build: 8 things you own                   ^ buy: 3 things you own[0m
+  [33m[WARN][0m Foundry classic connected agents retires 2027-03-31 - a build-path migration, Microsoft's problem on the buy path
+  [33m[WARN][0m Microsoft Sentinel in the Azure portal retires 2027-03-31 - a build-path migration, Microsoft's problem on the buy path
+
+[1m[32mVERDICT: Buy wins below $3,485/month of Perception consumption. Build what's yours; buy what's standard.[0m[0m

@@ -1,0 +1,63 @@
+[2m==============================================================================[0m
+[1m Demo 03 - The Handoff Chain[0m
+[2m Triage -> Investigation -> Detection -> Remediation  ·  free-text handoff[0m
+[2m==============================================================================[0m
+[2m  Synthetic data. 'Fabrikam Nordic', its agents, users and incidents are[0m
+[2m  fabricated for teaching. Agent logic here is a deterministic local stand-in[0m
+[2m  for the systems named - it illustrates the flow, it is not the product.[0m
+
+[1m[36mSTEP 1/5  Triage hands off to Investigation[0m[0m
+[2m------------------------------------------------------------------------------[0m
+  [36m[handoff][0m [1mTriage[0m -> [1mInvestigation[0m [2mas free text[0m
+      [2m"Reopened E-1017 as a true positive - the partner share links to an
+      AiTM page. Freja Nielsen in Finance clicked it and entered her password;
+      someone from procurement may have clicked too. Please investigate."[0m
+  [2mentities extracted      [0mfreja.nielsen
+
+[33m>> WHY THIS MATTERS: [0m'Someone from procurement' is not an entity. The next
+   agent can only investigate what it can resolve, and it resolved one user.
+  [32m[PASS][0m receiver validation: envelope accepted
+
+[1m[36mSTEP 2/5  Investigation works the entities it was handed[0m[0m
+[2m------------------------------------------------------------------------------[0m
+  [35m[tool][0m [1mquery SigninLogs[0m [2musers=1, risky sign-ins[0m
+  [35m[tool][0m [1mquery OfficeActivity[0m [2mmailbox and file activity[0m
+  [35m[tool][0m [1mpivot on attacker IPs[0m [2m203.0.113.77[0m
+    - token replay: freja.nielsen from 203.0.113.77
+    - New-InboxRule by freja.nielsen: move mail containing 'invoice' to RSS Feeds
+    - IP pivot: 203.0.113.77 also tried svc-payroll
+  [36m[handoff][0m [1mInvestigation[0m -> [1mDetection Engineering[0m [2mv2, 3 evidence refs[0m
+
+[1m[36mSTEP 3/5  Detection Engineering drafts a rule[0m[0m
+[2m------------------------------------------------------------------------------[0m
+  [2mrule                    [0mAiTM token replay followed by inbox rule
+  [2mstate                   [0mdraft - disabled until back-tested (Demo 04)
+  [36m[handoff][0m [1mDetection Engineering[0m -> [1mPosture Remediation[0m [2mv3[0m
+
+[1m[36mSTEP 4/5  Posture Remediation proposes a plan[0m[0m
+[2m------------------------------------------------------------------------------[0m
+    [[33mhard[0m] revoke sessions + reset password  ->  freja.nielsen
+    [[33mhard[0m] disable user  ->  svc-payroll
+    [[33mhard[0m] CA policy: token protection (Exchange, SharePoint)  ->  Finance + Procurement
+    [[2msoft[0m] block URL indicator  ->  hxxps://kystlogistik-sharepoint.example/board-pack
+
+[1m[36mSTEP 5/5  Execute - through the approval gate[0m[0m
+[2m------------------------------------------------------------------------------[0m
+
+[1m[33m  REQUIRES HUMAN APPROVAL[0m[0m  revoke sessions + reset password -> freja.nielsen
+  [32m[ALLOWED][0m Approve
+
+[1m[33m  REQUIRES HUMAN APPROVAL[0m[0m  disable user -> svc-payroll
+  [31m[BLOCKED][0m Reject - runs the 02:00 payroll batch for 1,400 employees. Suggest: reset password + require MFA re-registration instead
+
+[1m[33m  REQUIRES HUMAN APPROVAL[0m[0m  CA policy: token protection (Exchange, SharePoint) -> Finance + Procurement
+  [32m[ALLOWED][0m Approve
+  [32m[ALLOWED][0m block URL indicator -> hxxps://kystlogistik-sharepoint.example/board-pack
+
+  [31m[FAIL][0m jonas.berg still has a live attacker session
+
+[33m>> WHY THIS MATTERS: [0mEvery agent did its own job correctly. The incident
+   failed in the gap between two of them. Handoffs are where multi-agent
+   systems break.
+
+[1m[31mVERDICT: Contained 1 of 2 accounts. The attacker keeps Jonas's session.[0m[0m

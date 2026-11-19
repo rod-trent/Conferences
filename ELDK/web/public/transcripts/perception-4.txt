@@ -1,0 +1,18 @@
+[2m==============================================================================[0m
+[1m Demo 05 - A Microsoft Perception Playbook[0m
+[2m Playbook: Protect against a threat  ·  decision at the gate: approve[0m
+[2m==============================================================================[0m
+[2m  Synthetic data. 'Fabrikam Nordic', its agents, users and incidents are[0m
+[2m  fabricated for teaching. Agent logic here is a deterministic local stand-in[0m
+[2m  for the systems named - it illustrates the flow, it is not the product.[0m
+[2m  Modelled on Microsoft Learn (agentic-security docs). Agent reasoning is a stand-in.[0m
+
+[1m[36mSTEP 1/1  Start the playbook[0m[0m
+[2m------------------------------------------------------------------------------[0m
+  [31m[BLOCKED][0m Recon Agent is not enabled
+
+[33m>> WHY THIS MATTERS: [0mA playbook runs only when every agent it needs is
+   enabled. Turning one agent off is a governance decision with a visible
+   consequence - not a silent gap.
+
+[1m[31mVERDICT: Playbook not started. Enable the agent or run a playbook that doesn't need it.[0m[0m

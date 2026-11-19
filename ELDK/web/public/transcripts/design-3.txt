@@ -1,0 +1,18 @@
+[2m==============================================================================[0m
+[1m Demo 01 self-test[0m
+[2m==============================================================================[0m
+
+  [32m[PASS][0m Microsoft-built triage agent passes every control
+  [32m[PASS][0m triage agent scores 100
+  [32m[PASS][0m app registration fails ID
+  [32m[PASS][0m client secret fails CRED
+  [32m[PASS][0m ungated isolate/disable fails HITL
+  [32m[PASS][0m connected-agents dependency fails LIFE
+  [32m[PASS][0m Auto-Containment Bot is 'Do not run'
+  [32m[PASS][0m user-account identity fails ID
+  [32m[PASS][0m unused Security Administrator fails LP
+  [32m[PASS][0m attestation > 12 months fails OWN
+  [32m[PASS][0m gated 'enable custom detection' passes HITL
+  [32m[PASS][0m weights sum to 100
+
+[32m  12/12 checks passed[0m

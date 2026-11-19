@@ -1,0 +1,36 @@
+[2m==============================================================================[0m
+[1m Demo 01 - least-privilege fix for Auto-Containment Bot[0m
+[2m==============================================================================[0m
+[2m  Synthetic data. 'Fabrikam Nordic', its agents, users and incidents are[0m
+[2m  fabricated for teaching. Agent logic here is a deterministic local stand-in[0m
+[2m  for the systems named - it illustrates the flow, it is not the product.[0m
+
+[1m[36mSTEP 1/2  Grants versus use (from 30 days of sign-in and audit logs)[0m[0m
+[2m------------------------------------------------------------------------------[0m
+    [31mremove[0m Directory.ReadWrite.All[31m   high privilege[0m
+    [32mkeep  [0m Machine.Isolate
+    [32mkeep  [0m User.ReadWrite.All
+    [32mkeep  [0m ThreatHunting.Read.All
+    [31mremove[0m Mail.ReadWrite[31m   high privilege[0m
+    [31mremove[0m Policy.ReadWrite.ConditionalAccess[31m   high privilege[0m
+
+[33m>> WHY THIS MATTERS: [0mAn agent that reads untrusted input - emails, alerts,
+   URLs - should be assumed injectable. Whatever it is granted is what an
+   attacker gets.
+
+[1m[36mSTEP 2/2  The rebuilt design[0m[0m
+[2m------------------------------------------------------------------------------[0m
+  [32m[PASS][0m ID    Microsoft Entra Agent ID
+  [32m[PASS][0m OWN   sponsor soc-manager@fabrikam-nordic.dk, attested 2027-02-10
+  [32m[PASS][0m CRED  managed identity
+  [32m[PASS][0m LP    3 grants, all used
+  [32m[PASS][0m HITL  approval before: isolate device, disable user, delete email
+  [32m[PASS][0m EVAL  containment-50 (50 cases) gates: wrong-entity actions 0
+  [32m[PASS][0m RED   ASR 6% on 2027-02-10
+  [32m[PASS][0m LOOP  max 10 iterations
+  [32m[PASS][0m KILL  Disable agent identity (sponsor)
+  [32m[PASS][0m AUD   Purview audit log
+  [32m[PASS][0m COST  Quota alert at 80%
+  [32m[PASS][0m LIFE  no announced retirements
+
+[1m[32mVERDICT: 0 -> 100. Same model, same prompt.[0m[0m

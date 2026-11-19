@@ -1,0 +1,23 @@
+[2m==============================================================================[0m
+[1m Demo 04 - Ship first, test later[0m
+[2m Candidate B enabled with no back-test[0m
+[2m==============================================================================[0m
+[2m  Synthetic data. 'Fabrikam Nordic', its agents, users and incidents are[0m
+[2m  fabricated for teaching. Agent logic here is a deterministic local stand-in[0m
+[2m  for the systems named - it illustrates the flow, it is not the product.[0m
+
+[1m[36mSTEP 1/2  Enable B, run hourly[0m[0m
+[2m------------------------------------------------------------------------------[0m
+  [33m[WARN][0m no back-test, no approval - the agent 'helpfully' enables its first draft
+
+[1m[36mSTEP 2/2  The first 24 hours[0m[0m
+[2m------------------------------------------------------------------------------[0m
+  [2malerts raised           [0m23
+  [2mtrue positives          [0m0
+  [2manalyst minutes         [0m138 (6 min each)
+
+[33m>> WHY THIS MATTERS: [0mNoise is not harmless. Every one of those alerts trains
+   the analysts - and the triage agent - to close this rule without looking.
+   That is how the real one gets missed.
+
+[1m[31mVERDICT: 23 alerts, 0 attacks. The rule is disabled by lunch, and so is trust in it.[0m[0m

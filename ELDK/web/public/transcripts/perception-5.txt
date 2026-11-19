@@ -1,0 +1,29 @@
+[2m==============================================================================[0m
+[1m Demo 05 - Write your own playbook?[0m
+[2m The trade-off, shown[0m
+[2m==============================================================================[0m
+[2m  Synthetic data. 'Fabrikam Nordic', its agents, users and incidents are[0m
+[2m  fabricated for teaching. Agent logic here is a deterministic local stand-in[0m
+[2m  for the systems named - it illustrates the flow, it is not the product.[0m
+
+[1m[36mSTEP 1/2  The playbook library[0m[0m
+[2m------------------------------------------------------------------------------[0m
+    - Triage alert
+    - Protect against a threat
+    - Investigate attack
+    - Extract threat intelligence
+    - Identify attack paths
+    - Plan for posture remediation
+    - Assess identity risks
+    - Reduce credential phishing risk
+    - Close identity attack paths used in your environment
+
+[1m[36mSTEP 2/2  Create playbook: 'Vendor bank-detail fraud'[0m[0m
+[2m------------------------------------------------------------------------------[0m
+  [31m[BLOCKED][0m Preset by Microsoft. The playbook list is read-only. You can't create custom playbooks in this release.
+
+[33m>> WHY THIS MATTERS: [0mThis is the price of 'managed'. Microsoft maintains the
+   agents, prompts, handoffs and updates - and decides the scenarios. Your
+   vendor-fraud workflow is still a custom build.
+
+[1m[32mVERDICT: Buy what is standard. Build only what is yours.[0m[0m

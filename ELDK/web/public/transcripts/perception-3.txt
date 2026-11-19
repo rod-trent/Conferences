@@ -1,0 +1,74 @@
+[2m==============================================================================[0m
+[1m Demo 05 - A Microsoft Perception Playbook[0m
+[2m Playbook: Protect against a threat  ·  decision at the gate: stop[0m
+[2m==============================================================================[0m
+[2m  Synthetic data. 'Fabrikam Nordic', its agents, users and incidents are[0m
+[2m  fabricated for teaching. Agent logic here is a deterministic local stand-in[0m
+[2m  for the systems named - it illustrates the flow, it is not the product.[0m
+[2m  Modelled on Microsoft Learn (agentic-security docs). Agent reasoning is a stand-in.[0m
+
+[1m[36mSTEP 1/6  Threat Intelligence Agent  (blue team)[0m[0m
+[2m------------------------------------------------------------------------------[0m
+    [2mThreat report TR-2027-014: an AiTM phishing kit delivered through
+    compromised partner SharePoint tenants is targeting Nordic logistics and
+    finance teams.[0m
+    - T1566.002 Spearphishing Link
+    - T1557 Adversary-in-the-Middle
+    - T1550.004 Web Session Cookie
+    - T1564.008 Email Hiding Rules
+  [36m[handoff][0m [1mThreat Intelligence Agent[0m -> [1mRecon Agent[0m [2msession entry #2 3e970b6badd35a38[0m
+
+[33m>> WHY THIS MATTERS: [0mNo handoff envelope to design. The playbook defines what
+   passes between agents - in your build, that was Demo 03.
+
+[1m[36mSTEP 2/6  Recon Agent  (red team)[0m[0m
+[2m------------------------------------------------------------------------------[0m
+  [2mscope                   [0mAzure (read-only)
+    - Finance user (token theft)
+        -> Key Vault Secrets Officer on kv-payments  -> stpaymentsprod (payment files)
+    - svc-legacy-ftp (dormant, password auth)
+        -> Key Vault Secrets Officer on kv-payments  -> stpaymentsprod (payment files)
+  [33m[WARN][0m not covered: on-premises SAP payment run, AWS archive bucket
+  [36m[handoff][0m [1mRecon Agent[0m -> [1mPosture Prioritization Agent[0m [2msession entry #3 abb9b9657d8de006[0m
+
+[33m>> WHY THIS MATTERS: [0mRed team, read-only - and Azure only. The on-prem SAP
+   payment run is out of scope, and the session says so instead of pretending.
+
+[1m[36mSTEP 3/6  Posture Prioritization Agent  (green team)[0m[0m
+[2m------------------------------------------------------------------------------[0m
+    1. CA policy: token protection for Finance + Procurement
+    2. Disable dormant account svc-legacy-ftp[33m  [needs approval][0m
+    3. Make Key Vault Secrets Officer on kv-payments eligible (PIM), not standing
+  [36m[handoff][0m [1mPosture Prioritization Agent[0m -> [1mDetection Authoring Agent[0m [2msession entry #4 8a0e9fa0226b0fca[0m
+
+[33m>> WHY THIS MATTERS: [0mRanked by attack paths broken, not by severity label.
+   Rank 3 closes two paths at the choke point.
+
+[1m[36mSTEP 4/6  Detection Authoring Agent  (blue team)[0m[0m
+[2m------------------------------------------------------------------------------[0m
+  [2mproposed rule           [0mRisky sign-in, then an inbox rule that hides finance mail
+  [36m[handoff][0m [1mDetection Authoring Agent[0m -> [1mAttack Investigation Agent[0m [2msession entry #5 56cb30c7b88711c2[0m
+
+[33m>> WHY THIS MATTERS: [0mSame rule Demo 04's custom agent arrived at - without you
+   maintaining the agent that wrote it.
+
+[1m[36mSTEP 5/6  Attack Investigation Agent  (blue team)[0m[0m
+[2m------------------------------------------------------------------------------[0m
+  [2malready exploited?      [0myes - INC-4471, contained (Demo 03)
+  [2mnew findings            [0mnone beyond INC-4471
+  [36m[handoff][0m [1mAttack Investigation Agent[0m -> [1mApproval gate[0m [2msession entry #6 e40600d0f6bda187[0m
+
+[33m>> WHY THIS MATTERS: [0mThe playbook checks whether the threat has already
+   landed. It has: INC-4471, contained.
+
+[1m[36mSTEP 6/6  Waiting for input[0m[0m
+[2m------------------------------------------------------------------------------[0m
+
+[1m[33m  REQUIRES HUMAN APPROVAL[0m[0m  Disable user account svc-legacy-ftp  (from Posture Prioritization, rank 2)
+[2m    options:  Approve  ·  Reject  ·  Suggest an alternative  ·  Stop[0m
+  [31m[BLOCKED][0m Stopped: session stopped - this cannot be undone
+
+  [2msession                 [0mStopped, 7 entries, chain intact
+  [2maudit                   [0meach action also lands in Microsoft Purview audit logs
+
+[1m[31mVERDICT: Stopped. The session is final; the audit trail is not lost.[0m[0m

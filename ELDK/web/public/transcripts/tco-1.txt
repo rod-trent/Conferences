@@ -1,0 +1,21 @@
+[2m==============================================================================[0m
+[1m Demo 06 - Sensitivity[0m
+[2m Mid-size SOC - 2,000 E5 users, 5 custom agents  ·  break-even $17,050/month[0m
+[2m==============================================================================[0m
+[2m  Synthetic data. 'Fabrikam Nordic', its agents, users and incidents are[0m
+[2m  fabricated for teaching. Agent logic here is a deterministic local stand-in[0m
+[2m  for the systems named - it illustrates the flow, it is not the product.[0m
+
+[1m[36mSTEP 1/1  Halve or double one assumption at a time (engineer cost held fixed)[0m[0m
+[2m------------------------------------------------------------------------------[0m
+    maintenance_weeks_per_agent_year       $13,050 .. $25,050   
+    build_weeks_per_agent                  $16,050 .. $19,050   
+    oncall_weeks_year                      $15,750 .. $19,650   
+    eval_upkeep_weeks_year                 $16,450 .. $18,250   
+    custom_scu_month                       $14,050 .. $24,850   
+
+[33m>> WHY THIS MATTERS: [0mThe assumption that moves the answer most is
+   'maintenance_weeks_per_agent_year' - worth $12,000/month of swing. Get it
+   from your own history of keeping automations alive, not from a vendor.
+
+[1m[32mVERDICT: Argue about maintenance, not about build cost.[0m[0m

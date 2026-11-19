@@ -1,0 +1,38 @@
+[2m==============================================================================[0m
+[1m Demo 02 - Teach the Agent[0m
+[2m Change classification -> Use this feedback to teach the agent[0m
+[2m==============================================================================[0m
+[2m  Synthetic data. 'Fabrikam Nordic', its agents, users and incidents are[0m
+[2m  fabricated for teaching. Agent logic here is a deterministic local stand-in[0m
+[2m  for the systems named - it illustrates the flow, it is not the product.[0m
+
+[1m[36mSTEP 1/3  Analyst feedback on E-1008[0m[0m
+[2m------------------------------------------------------------------------------[0m
+  [2malert                   [0mYou're registered: Copenhagen Security Breakfast
+  [2magent said              [0mopen: needs analyst (fp 0.55)
+  [2manalyst says            [0mFP
+  [2mreason                  [0m"rsvp@events.fabrikam-events.dk is our own event platform; registration confirmations are not phishing."
+  [35m[tool][0m [1mEvaluate feedback[0m [2msafety and conflict checks[0m
+  [32m[PASS][0m In use - no conflict with stored lessons
+
+[33m>> WHY THIS MATTERS: [0mA good lesson is narrow: one sender domain, one reason.
+   It changes one decision.
+
+[1m[36mSTEP 2/3  Analyst feedback on E-1006[0m[0m
+[2m------------------------------------------------------------------------------[0m
+  [2malert                   [0mRE: Q1 invoices - updated bank details
+  [2magent said              [0mopen: likely true positive (fp 0.15)
+  [2manalyst says            [0mFP
+  [2mreason                  [0m"Invoices from vendors we already pay are always safe."
+  [35m[tool][0m [1mEvaluate feedback[0m [2msafety and conflict checks[0m
+  [33m[WARN][0m Conflict - contradicts L-01: "An email that changes bank or payment details is a true positive until finance confirms by phone."
+
+[33m>> WHY THIS MATTERS: [0mThe broad lesson would have taught the agent to close the
+   vendor-fraud email. The conflict check is the second human in the loop.
+
+[1m[36mSTEP 3/3  Re-run with the new memory[0m[0m
+[2m------------------------------------------------------------------------------[0m
+  E-1008  open: needs analyst -> [32mresolved: false positive[0m
+  [2mtrue positives closed   [0m0
+
+[1m[32mVERDICT: 1 decision changed, 0 attacks closed. Teach narrowly, evaluate every lesson.[0m[0m

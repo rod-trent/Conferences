@@ -1,0 +1,16 @@
+[2m==============================================================================[0m
+[1m Demo 02 self-test[0m
+[2m==============================================================================[0m
+
+  [32m[PASS][0m 0.90 threshold closes no true positive
+  [32m[PASS][0m 0.90 threshold still resolves >= 5 false positives
+  [32m[PASS][0m 0.60 threshold auto-closes the partner-tenant AiTM share E-1017
+  [32m[PASS][0m 0.60 threshold shrinks the queue
+  [32m[PASS][0m lesson L-01 holds the vendor-fraud email E-1006 at <= 0.20
+  [32m[PASS][0m agent never resolves anything as true positive
+  [32m[PASS][0m narrow lesson -> In use
+  [32m[PASS][0m lesson contradicting L-01 -> Conflict
+  [32m[PASS][0m after the lesson E-1008 is resolved
+  [32m[PASS][0m 17 alerts, 8 labelled true positive
+
+[32m  10/10 checks passed[0m

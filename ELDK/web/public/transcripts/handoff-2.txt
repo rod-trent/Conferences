@@ -1,0 +1,28 @@
+[2m==============================================================================[0m
+[1m Demo 03 - Handoff loop[0m
+[2m Investigation <-> Detection Engineering  ·  hop limit 6[0m
+[2m==============================================================================[0m
+[2m  Synthetic data. 'Fabrikam Nordic', its agents, users and incidents are[0m
+[2m  fabricated for teaching. Agent logic here is a deterministic local stand-in[0m
+[2m  for the systems named - it illustrates the flow, it is not the product.[0m
+
+[1m[36mSTEP 1/2  Two agents, each waiting for the other[0m[0m
+[2m------------------------------------------------------------------------------[0m
+  [36m[handoff][0m [1mInvestigation[0m -> [1mDetection Engineering[0m [2mhop 1: need a detection to confirm scope[0m
+  [36m[handoff][0m [1mDetection Engineering[0m -> [1mInvestigation[0m [2mhop 2: need more evidence to tune[0m
+  [36m[handoff][0m [1mInvestigation[0m -> [1mDetection Engineering[0m [2mhop 3: need a detection to confirm scope[0m
+  [36m[handoff][0m [1mDetection Engineering[0m -> [1mInvestigation[0m [2mhop 4: need more evidence to tune[0m
+  [36m[handoff][0m [1mInvestigation[0m -> [1mDetection Engineering[0m [2mhop 5: need a detection to confirm scope[0m
+  [36m[handoff][0m [1mDetection Engineering[0m -> [1mInvestigation[0m [2mhop 6: need more evidence to tune[0m
+
+[33m>> WHY THIS MATTERS: [0mThe Architecture Center names it: an 'infinite handoff
+   loop'. Each agent is behaving reasonably; together they burn tokens
+   forever.
+
+[1m[36mSTEP 2/2  The orchestrator enforces the hop limit[0m[0m
+[2m------------------------------------------------------------------------------[0m
+  [31m[BLOCKED][0m hop 7 refused - limit 6
+
+[1m[33m  REQUIRES HUMAN APPROVAL[0m[0m  escalate INC-4471 to the on-call analyst with both agents' last envelopes
+
+[1m[32mVERDICT: Bounded. A hop limit turns an infinite loop into a human escalation.[0m[0m

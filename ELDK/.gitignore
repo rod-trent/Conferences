@@ -1,0 +1,8 @@
+node_modules/
+__pycache__/
+*.pyc
+deck/build/package-lock.json
+~$*.pptx
+
+.vercel
+.env*

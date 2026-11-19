@@ -1,0 +1,17 @@
+[2m==============================================================================[0m
+[1m Demo 03 self-test[0m
+[2m==============================================================================[0m
+
+  [32m[PASS][0m structured run contains both compromised accounts
+  [32m[PASS][0m structured run causes no outage
+  [32m[PASS][0m gate rejects disabling the payroll service account
+  [32m[PASS][0m URL block (soft action) runs without approval
+  [32m[PASS][0m triage envelope passes validation
+  [32m[PASS][0m validation rejects an envelope with a fake evidence id
+  [32m[PASS][0m free-text handoff loses jonas.berg
+  [32m[PASS][0m no gate -> payroll account disabled
+  [32m[PASS][0m loop stops at the hop limit
+  [32m[PASS][0m race without version check loses a user
+  [32m[PASS][0m race with version check keeps both users
+
+[32m  11/11 checks passed[0m

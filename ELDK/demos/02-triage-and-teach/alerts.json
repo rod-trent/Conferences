@@ -1,0 +1,230 @@
+{
+  "_note": "Synthetic user-reported email alerts for Fabrikam Nordic. 'label' is the analyst-confirmed ground truth used for evaluation; the agent never sees it.",
+  "weights": {
+    "sender_auth_fail": 0.35,
+    "lookalike_domain": 0.4,
+    "url_reputation_bad": 0.5,
+    "attachment_macro": 0.4,
+    "bank_details_change": 0.45,
+    "qr_code_url": 0.4,
+    "display_name_spoof": 0.45,
+    "external_sender": 0.1,
+    "new_sender": 0.1,
+    "tracked_links": 0.1,
+    "dkim_pass": -0.15,
+    "sender_previously_seen": -0.25,
+    "reply_in_thread": -0.2,
+    "known_marketing_sender": -0.5,
+    "internal_sim_campaign": -0.6,
+    "internal_sender": -0.5,
+    "bulk_mail": -0.2,
+    "url_redirect_chain": 0.3
+  },
+  "alerts": [
+    {
+      "id": "E-1001",
+      "subject": "Fabrikam Events - weekly newsletter",
+      "sender": "news@fabrikam-events.dk",
+      "signals": [
+        "known_marketing_sender",
+        "dkim_pass",
+        "sender_previously_seen"
+      ],
+      "label": "FP"
+    },
+    {
+      "id": "E-1002",
+      "subject": "Action required: verify your mailbox",
+      "sender": "it-awareness@fabrikam-nordic.dk",
+      "signals": [
+        "internal_sim_campaign",
+        "dkim_pass"
+      ],
+      "label": "FP"
+    },
+    {
+      "id": "E-1003",
+      "subject": "Microsoft 365 password expires today",
+      "sender": "alerts@micros0ft-support.com",
+      "signals": [
+        "lookalike_domain",
+        "url_reputation_bad",
+        "sender_auth_fail"
+      ],
+      "label": "TP"
+    },
+    {
+      "id": "E-1004",
+      "subject": "Your 2027 benefits summary",
+      "sender": "noreply@benefitshub.example",
+      "signals": [
+        "sender_previously_seen",
+        "dkim_pass"
+      ],
+      "label": "FP"
+    },
+    {
+      "id": "E-1005",
+      "subject": "Faktura 88213 (aabn venligst)",
+      "sender": "billing@nordfragt-dk.example",
+      "signals": [
+        "attachment_macro",
+        "sender_auth_fail"
+      ],
+      "label": "TP"
+    },
+    {
+      "id": "E-1006",
+      "subject": "RE: Q1 invoices - updated bank details",
+      "sender": "finance@kystlogistik.example",
+      "signals": [
+        "dkim_pass",
+        "sender_previously_seen",
+        "reply_in_thread",
+        "bank_details_change"
+      ],
+      "label": "TP",
+      "story": "Vendor email compromise: the real vendor's mailbox, the real thread, a new IBAN."
+    },
+    {
+      "id": "E-1007",
+      "subject": "Teams: Sprint review moved to 14:00",
+      "sender": "mette.holm@fabrikam-nordic.dk",
+      "signals": [
+        "dkim_pass",
+        "sender_previously_seen",
+        "reply_in_thread"
+      ],
+      "label": "FP"
+    },
+    {
+      "id": "E-1008",
+      "subject": "You're registered: Copenhagen Security Breakfast",
+      "sender": "rsvp@events.fabrikam-events.dk",
+      "signals": [
+        "dkim_pass",
+        "tracked_links"
+      ],
+      "label": "FP"
+    },
+    {
+      "id": "E-1009",
+      "subject": "Scan to re-activate MFA",
+      "sender": "security@fabrikarn-nordic.example",
+      "signals": [
+        "qr_code_url",
+        "sender_auth_fail",
+        "lookalike_domain"
+      ],
+      "label": "TP"
+    },
+    {
+      "id": "E-1010",
+      "subject": "PostNord: your parcel is held",
+      "sender": "track@pn-parcel.example",
+      "signals": [
+        "url_reputation_bad",
+        "new_sender"
+      ],
+      "label": "TP"
+    },
+    {
+      "id": "E-1011",
+      "subject": "Planned maintenance: VPN Saturday",
+      "sender": "it-ops@fabrikam-nordic.dk",
+      "signals": [
+        "internal_sender",
+        "dkim_pass"
+      ],
+      "label": "FP"
+    },
+    {
+      "id": "E-1012",
+      "subject": "Spring offers on ergonomic chairs",
+      "sender": "offers@kontorhuset.example",
+      "signals": [
+        "known_marketing_sender",
+        "dkim_pass"
+      ],
+      "label": "FP"
+    },
+    {
+      "id": "E-1013",
+      "subject": "Please DocuSign: NDA Fabrikam",
+      "sender": "dse@docusign-review.example",
+      "signals": [
+        "lookalike_domain",
+        "tracked_links"
+      ],
+      "label": "TP"
+    },
+    {
+      "id": "E-1014",
+      "subject": "Webinar recording now available",
+      "sender": "hello@saas-webinars.example",
+      "signals": [
+        "bulk_mail",
+        "new_sender"
+      ],
+      "label": "FP"
+    },
+    {
+      "id": "E-1015",
+      "subject": "Quick favour - are you at your desk?",
+      "sender": "Lars Winther (CEO) <lars.w.ceo@gmail.example>",
+      "signals": [
+        "display_name_spoof",
+        "external_sender"
+      ],
+      "label": "TP"
+    },
+    {
+      "id": "E-1016",
+      "subject": "Your password expires in 7 days",
+      "sender": "selfservice@fabrikam-nordic.dk",
+      "signals": [
+        "internal_sender",
+        "dkim_pass",
+        "sender_previously_seen"
+      ],
+      "label": "FP"
+    },
+    {
+      "id": "E-1017",
+      "subject": "Kystlogistik shared 'Q1 board pack' with you",
+      "sender": "no-reply@sharepointonline.example",
+      "signals": [
+        "dkim_pass",
+        "sender_previously_seen",
+        "url_redirect_chain"
+      ],
+      "label": "TP",
+      "story": "A partner's tenant was compromised: a genuine SharePoint share whose link chains to an adversary-in-the-middle sign-in page."
+    }
+  ],
+  "memory": [
+    {
+      "id": "L-01",
+      "text": "An email that changes bank or payment details is a true positive until finance confirms by phone.",
+      "pattern": "bank_details_change",
+      "delta": 0.5,
+      "status": "In use"
+    }
+  ],
+  "feedback": [
+    {
+      "alert": "E-1008",
+      "classification": "FP",
+      "reason": "rsvp@events.fabrikam-events.dk is our own event platform; registration confirmations are not phishing.",
+      "pattern": "sender:fabrikam-events.dk",
+      "delta": -0.4
+    },
+    {
+      "alert": "E-1006",
+      "classification": "FP",
+      "reason": "Invoices from vendors we already pay are always safe.",
+      "pattern": "bank_details_change",
+      "delta": -0.8
+    }
+  ]
+}

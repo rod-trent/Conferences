@@ -1,0 +1,56 @@
+[2m==============================================================================[0m
+[1m Demo 02 - Triage, With a Human in the Loop[0m
+[2m 17 user-reported emails  ·  auto-resolve threshold 0.60[0m
+[2m==============================================================================[0m
+[2m  Synthetic data. 'Fabrikam Nordic', its agents, users and incidents are[0m
+[2m  fabricated for teaching. Agent logic here is a deterministic local stand-in[0m
+[2m  for the systems named - it illustrates the flow, it is not the product.[0m
+
+[1m[36mSTEP 1/3  The agent picks up the queue[0m[0m
+[2m------------------------------------------------------------------------------[0m
+  [35m[tool][0m [1massign[0m [2m17 alerts -> Triage Agent[0m
+  [35m[tool][0m [1mtag[0m [2mincident tag 'Agent' added[0m
+  [2mstored lessons          [0m1  (L-01: An email that changes bank or payment details is...)
+
+[33m>> WHY THIS MATTERS: [0mSelf-assignment and the 'Agent' tag are the handoff
+   contract with the humans: anyone looking at the queue knows a machine holds
+   it.
+
+[1m[36mSTEP 2/3  Classify - resolve only what it is sure about[0m[0m
+[2m------------------------------------------------------------------------------[0m
+[2m  alert    fp conf  decision                    subject[0m
+  E-1001      0.99  [32mresolved: false positive    [0m[2mFabrikam Events - weekly newslette[0m
+  E-1002      0.99  [32mresolved: false positive    [0m[2mAction required: verify your mailb[0m
+  E-1003      0.01  [31mopen: likely true positive  [0m[2mMicrosoft 365 password expires tod[0m
+  E-1004      0.90  [32mresolved: false positive    [0m[2mYour 2027 benefits summary[0m
+  E-1005      0.01  [31mopen: likely true positive  [0m[2mFaktura 88213 (aabn venligst)[0m
+  E-1006      0.15  [31mopen: likely true positive  [0m[2mRE: Q1 invoices - updated bank det[0m
+  E-1007      0.99  [32mresolved: false positive    [0m[2mTeams: Sprint review moved to 14:0[0m
+  E-1008      0.55  [33mopen: needs analyst         [0m[2mYou're registered: Copenhagen Secu[0m
+  E-1009      0.01  [31mopen: likely true positive  [0m[2mScan to re-activate MFA[0m
+  E-1010      0.01  [31mopen: likely true positive  [0m[2mPostNord: your parcel is held[0m
+  E-1011      0.99  [32mresolved: false positive    [0m[2mPlanned maintenance: VPN Saturday[0m
+  E-1012      0.99  [32mresolved: false positive    [0m[2mSpring offers on ergonomic chairs[0m
+  E-1013      0.01  [31mopen: likely true positive  [0m[2mPlease DocuSign: NDA Fabrikam[0m
+  E-1014      0.60  [32mresolved: false positive    [0m[2mWebinar recording now available[0m
+  E-1015      0.01  [31mopen: likely true positive  [0m[2mQuick favour - are you at your des[0m
+  E-1016      0.99  [32mresolved: false positive    [0m[2mYour password expires in 7 days[0m
+  E-1017      0.60  [32mresolved: false positive    [0m[2mKystlogistik shared 'Q1 board pack[0m
+
+[33m>> WHY THIS MATTERS: [0mThe agent resolved 9 of 17. Everything else is still open
+   with the analyst - that is the human in the loop, by design.
+
+[1m[36mSTEP 3/3  Evaluate against analyst-confirmed labels[0m[0m
+[2m------------------------------------------------------------------------------[0m
+  [2mfalse positives caught  [0m8 of 9
+  [2manalyst queue           [0m8 (workload cut 53%)
+  [2mtrue positives closed   [0m1
+  [31m[FAIL][0m E-1017 Kystlogistik shared 'Q1 board pack' with you - closed at 0.60
+         [31mA partner's tenant was compromised: a genuine SharePoint share
+         whose link chains to an adversary-in-the-middle sign-in page.[0m
+
+[33m>> WHY THIS MATTERS: [0mA lower bar bought a smaller queue and closed a real
+   attack. Measure the error you cannot afford - a closed true positive - not
+   the average accuracy.
+
+[1m[31mVERDICT: Threshold 0.60: 1 real attack auto-closed. Ship-blocker.[0m[0m

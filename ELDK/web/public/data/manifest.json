@@ -1,0 +1,363 @@
+{
+  "generated_note": "Built by web/build.py. Do not edit by hand.",
+  "repo": "https://github.com/rod-trent/Conferences/tree/main/ELDK",
+  "event": {
+    "name": "Experts Live Denmark 2027",
+    "location": "Bella Center Copenhagen",
+    "dates": "9\u201310 February 2027",
+    "url": "https://eldk27.expertslive.dk/"
+  },
+  "sessions": [
+    {
+      "id": "soc",
+      "title": "The Agentic SOC",
+      "subtitle": "Best Practices for Custom Agents, Role Handoffs, and Why Microsoft Perception Is More Supportable and Cost-Effective",
+      "slot": "Experts Live Denmark 2027 \u00b7 Bella Center Copenhagen \u00b7 9\u201310 February 2027",
+      "presenters": "Rod Trent",
+      "accent": "#008BD2",
+      "deck": {
+        "file": "The Agentic SOC - Experts Live Denmark 2027.pptx",
+        "view": "https://view.officeapps.live.com/op/view.aspx?src=https%3A%2F%2Fraw.githubusercontent.com%2Frod-trent%2FConferences%2Fmain%2FELDK%2FSlideDecks%2FThe%2520Agentic%2520SOC%2520-%2520Experts%2520Live%2520Denmark%25202027.pptx",
+        "download": "https://github.com/rod-trent/Conferences/raw/main/ELDK/SlideDecks/The%20Agentic%20SOC%20-%20Experts%20Live%20Denmark%202027.pptx",
+        "powerpoint": "ms-powerpoint:ofe|u|https://raw.githubusercontent.com/rod-trent/Conferences/main/ELDK/SlideDecks/The%20Agentic%20SOC%20-%20Experts%20Live%20Denmark%202027.pptx"
+      }
+    }
+  ],
+  "pyAssets": [
+    "common/term.py",
+    "01-design-the-agent/agent_review.py",
+    "01-design-the-agent/agents.json",
+    "02-triage-and-teach/triage_agent.py",
+    "02-triage-and-teach/alerts.json",
+    "03-hand-off/soc_handoffs.py",
+    "04-detection-engineering/detection_agent.py",
+    "05-perception-playbook/perception_playbook.py",
+    "06-build-vs-buy/build_vs_buy.py",
+    "06-build-vs-buy/assumptions.json"
+  ],
+  "demos": [
+    {
+      "id": "design",
+      "session": "soc",
+      "title": "Design Review for SOC Agents",
+      "subtitle": "Demo 1 \u00b7 slide 10",
+      "blurb": "Four agents - one Microsoft-built, three custom - scored against twelve controls Microsoft documents: identity, sponsor, least privilege, approval on hard actions, evaluation, lifecycle. Then rebuild the worst one without touching its prompt.",
+      "kind": "run",
+      "script": "01-design-the-agent/agent_review.py",
+      "variants": [
+        {
+          "label": "Scorecard",
+          "args": [
+            "--fast"
+          ],
+          "primary": true,
+          "transcript": "design-0"
+        },
+        {
+          "label": "Least-privilege rebuild",
+          "args": [
+            "--fix",
+            "Auto-Containment Bot",
+            "--fast"
+          ],
+          "highlight": true,
+          "transcript": "design-1"
+        },
+        {
+          "label": "Drill into Nordlys Enrichment",
+          "args": [
+            "--agent",
+            "Nordlys Enrichment",
+            "--fast"
+          ],
+          "transcript": "design-2"
+        },
+        {
+          "label": "Self-test",
+          "args": [
+            "--self-test"
+          ],
+          "transcript": "design-3"
+        }
+      ]
+    },
+    {
+      "id": "triage",
+      "session": "soc",
+      "title": "Triage, With a Human in the Loop",
+      "subtitle": "Demo 2 \u00b7 slide 12",
+      "blurb": "A triage agent resolves the false positives it is sure of and leaves the rest with an analyst. Lower the threshold and it closes a real attack. Teach it narrowly, and the conflict check stops the lesson that would have closed vendor fraud.",
+      "kind": "run",
+      "script": "02-triage-and-teach/triage_agent.py",
+      "variants": [
+        {
+          "label": "Threshold 0.90",
+          "args": [
+            "--fast"
+          ],
+          "primary": true,
+          "transcript": "triage-0"
+        },
+        {
+          "label": "Threshold 0.60",
+          "args": [
+            "--threshold",
+            "0.6",
+            "--fast"
+          ],
+          "highlight": true,
+          "transcript": "triage-1"
+        },
+        {
+          "label": "Teach the agent",
+          "args": [
+            "--teach",
+            "--fast"
+          ],
+          "transcript": "triage-2"
+        },
+        {
+          "label": "Self-test",
+          "args": [
+            "--self-test"
+          ],
+          "transcript": "triage-3"
+        }
+      ]
+    },
+    {
+      "id": "handoff",
+      "session": "soc",
+      "title": "The Handoff Chain",
+      "subtitle": "Demo 3 \u00b7 slide 19",
+      "blurb": "Triage, Investigation, Detection Engineering and Posture Remediation work one AiTM incident through a typed handoff envelope and an approval gate. Then break it four ways: a prose handoff, a loop, a race, and no gate.",
+      "kind": "run",
+      "script": "03-hand-off/soc_handoffs.py",
+      "variants": [
+        {
+          "label": "Structured + gate",
+          "args": [
+            "--fast"
+          ],
+          "primary": true,
+          "transcript": "handoff-0"
+        },
+        {
+          "label": "Free-text handoff",
+          "args": [
+            "--free-text",
+            "--fast"
+          ],
+          "highlight": true,
+          "transcript": "handoff-1"
+        },
+        {
+          "label": "Handoff loop",
+          "args": [
+            "--loop",
+            "--fast"
+          ],
+          "transcript": "handoff-2"
+        },
+        {
+          "label": "Two writers",
+          "args": [
+            "--race",
+            "--fast"
+          ],
+          "transcript": "handoff-3"
+        },
+        {
+          "label": "No approval gate",
+          "args": [
+            "--no-gate",
+            "--fast"
+          ],
+          "transcript": "handoff-4"
+        },
+        {
+          "label": "Self-test",
+          "args": [
+            "--self-test"
+          ],
+          "transcript": "handoff-5"
+        }
+      ]
+    },
+    {
+      "id": "detection",
+      "session": "soc",
+      "title": "The Detection Engineering Agent",
+      "subtitle": "Demo 4 \u00b7 slide 20",
+      "blurb": "Three candidate rules - IOC, broad, behavioural - back-tested against a week of telemetry before anyone is asked to enable one. Then the version where the agent ships first.",
+      "kind": "run",
+      "script": "04-detection-engineering/detection_agent.py",
+      "variants": [
+        {
+          "label": "Back-test, then ask",
+          "args": [
+            "--fast"
+          ],
+          "primary": true,
+          "transcript": "detection-0"
+        },
+        {
+          "label": "Ship first",
+          "args": [
+            "--ship-first",
+            "--fast"
+          ],
+          "highlight": true,
+          "transcript": "detection-1"
+        },
+        {
+          "label": "The KQL",
+          "args": [
+            "--kql"
+          ],
+          "transcript": "detection-2"
+        },
+        {
+          "label": "Self-test",
+          "args": [
+            "--self-test"
+          ],
+          "transcript": "detection-3"
+        }
+      ]
+    },
+    {
+      "id": "perception",
+      "session": "soc",
+      "title": "A Microsoft Perception Playbook",
+      "subtitle": "Demo 5 \u00b7 slide 27",
+      "blurb": "The documented 'Protect against a threat' playbook: Threat Intelligence, Recon, Posture Prioritization, Detection Authoring and Attack Investigation - one session, one approval gate. Plus what you can't do: run without a required agent, or write your own playbook.",
+      "kind": "run",
+      "script": "05-perception-playbook/perception_playbook.py",
+      "variants": [
+        {
+          "label": "Approve",
+          "args": [
+            "--fast"
+          ],
+          "primary": true,
+          "transcript": "perception-0"
+        },
+        {
+          "label": "Suggest an alternative",
+          "args": [
+            "--decision",
+            "suggest",
+            "--fast"
+          ],
+          "highlight": true,
+          "transcript": "perception-1"
+        },
+        {
+          "label": "Reject",
+          "args": [
+            "--decision",
+            "reject",
+            "--fast"
+          ],
+          "transcript": "perception-2"
+        },
+        {
+          "label": "Stop",
+          "args": [
+            "--decision",
+            "stop",
+            "--fast"
+          ],
+          "transcript": "perception-3"
+        },
+        {
+          "label": "Recon Agent disabled",
+          "args": [
+            "--disable",
+            "Recon Agent",
+            "--fast"
+          ],
+          "transcript": "perception-4"
+        },
+        {
+          "label": "Custom playbook?",
+          "args": [
+            "--custom",
+            "--fast"
+          ],
+          "transcript": "perception-5"
+        },
+        {
+          "label": "Self-test",
+          "args": [
+            "--self-test"
+          ],
+          "transcript": "perception-6"
+        }
+      ]
+    },
+    {
+      "id": "tco",
+      "session": "soc",
+      "title": "Build vs. Buy: the Three-Year View",
+      "subtitle": "Demo 6 \u00b7 slide 31",
+      "blurb": "A transparent three-year cost model: Microsoft's facts ($6 overage SCU, the E5 SCU inclusion, two 2027 retirements) plus your assumptions - and, because there is no public Perception rate card, a break-even instead of an invented price.",
+      "kind": "run",
+      "script": "06-build-vs-buy/build_vs_buy.py",
+      "variants": [
+        {
+          "label": "Mid-size SOC",
+          "args": [
+            "--fast"
+          ],
+          "primary": true,
+          "transcript": "tco-0"
+        },
+        {
+          "label": "Sensitivity",
+          "args": [
+            "--sensitivity",
+            "--fast"
+          ],
+          "highlight": true,
+          "transcript": "tco-1"
+        },
+        {
+          "label": "Small SOC",
+          "args": [
+            "--profile",
+            "small",
+            "--fast"
+          ],
+          "transcript": "tco-2"
+        },
+        {
+          "label": "Large SOC",
+          "args": [
+            "--profile",
+            "large",
+            "--fast"
+          ],
+          "transcript": "tco-3"
+        },
+        {
+          "label": "With a $12k/month quote",
+          "args": [
+            "--quote",
+            "12000",
+            "--fast"
+          ],
+          "transcript": "tco-4"
+        },
+        {
+          "label": "Self-test",
+          "args": [
+            "--self-test"
+          ],
+          "transcript": "tco-5"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+[2m==============================================================================[0m
+[1m Demo 05 self-test[0m
+[2m==============================================================================[0m
+
+  [32m[PASS][0m documented sequence runs in order
+  [32m[PASS][0m 8 agents across red/blue/green
+  [32m[PASS][0m Recon is the only red team agent
+  [32m[PASS][0m approve -> Completed
+  [32m[PASS][0m session hash chain verifies
+  [32m[PASS][0m editing an entry breaks the chain
+  [32m[PASS][0m stop -> Stopped
+  [32m[PASS][0m suggest -> revised step recorded and approved
+  [32m[PASS][0m disabled required agent -> playbook not started
+  [32m[PASS][0m 9 documented playbooks listed
+
+[32m  10/10 checks passed[0m

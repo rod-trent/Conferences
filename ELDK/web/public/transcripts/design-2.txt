@@ -1,0 +1,32 @@
+[2m==============================================================================[0m
+[1m Demo 01 - Nordlys Enrichment[0m
+[2m Custom (Security Copilot agent builder)[0m
+[2m==============================================================================[0m
+[2m  Synthetic data. 'Fabrikam Nordic', its agents, users and incidents are[0m
+[2m  fabricated for teaching. Agent logic here is a deterministic local stand-in[0m
+[2m  for the systems named - it illustrates the flow, it is not the product.[0m
+
+  Enrich new incidents with user, URL and sign-in context before an analyst
+  opens them.
+
+  [2midentity                [0muser-account (user session)
+  [2msponsor / owner         [0m- / mads.jensen@fabrikam-nordic.dk
+  [2mactions                 [0mcomment on incident, run KQL, analyze_user_entity
+  [2mapproval before         [0m-
+
+[1m[36mSTEP 1/1  Findings[0m[0m
+[2m------------------------------------------------------------------------------[0m
+  [31m[FAIL][0m ID    runs as mads.jensen@fabrikam-nordic.dk - inherits that person's access
+  [31m[FAIL][0m OWN   no sponsor - nobody is accountable for it
+  [32m[PASS][0m CRED  user session
+  [31m[FAIL][0m LP    2 unused grant(s): Security Administrator, Exchange Administrator - high privilege!
+  [32m[PASS][0m HITL  takes no hard actions
+  [31m[FAIL][0m EVAL  enrich-40 exists but does not run on change
+  [31m[FAIL][0m RED   never red-teamed
+  [32m[PASS][0m LOOP  max 12 iterations
+  [32m[PASS][0m KILL  Unpublish in Security Copilot
+  [32m[PASS][0m AUD   Security Copilot session history
+  [31m[FAIL][0m COST  Overage cap: unlimited
+  [32m[PASS][0m LIFE  no announced retirements
+
+[1m[31mVERDICT: 42/100 - Do not run[0m[0m

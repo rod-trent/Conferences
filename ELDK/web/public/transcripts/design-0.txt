@@ -1,0 +1,58 @@
+[2m==============================================================================[0m
+[1m Demo 01 - Design Review for SOC Agents[0m
+[2m Fabrikam Nordic SOC  ·  4 agents  ·  12 controls from Microsoft Learn[0m
+[2m==============================================================================[0m
+[2m  Synthetic data. 'Fabrikam Nordic', its agents, users and incidents are[0m
+[2m  fabricated for teaching. Agent logic here is a deterministic local stand-in[0m
+[2m  for the systems named - it illustrates the flow, it is not the product.[0m
+
+[1m[36mSTEP 1/3  The inventory - who built what, running as whom[0m[0m
+[2m------------------------------------------------------------------------------[0m
+  [1mPhishing Triage Agent[0m      [2mMicrosoft-built (Defender)[0m
+      [2mruns as:[0m entra agent id
+      [2mcan:[0m     resolve alert (false positive), classify alert, add incident tag
+  [1mNordlys Enrichment[0m         [2mCustom (Security Copilot agent builder)[0m
+      [2mruns as:[0m user account
+      [2mcan:[0m     comment on incident, run KQL, analyze_user_entity
+  [1mAuto-Containment Bot[0m       [2mCustom (Foundry agent + Python)[0m
+      [2mruns as:[0m app registration
+      [2mcan:[0m     isolate device, disable user, delete email, run KQL
+  [1mDetection Drafter[0m          [2mCustom (Microsoft Agent Framework on Foundry)[0m
+      [2mruns as:[0m entra agent id
+      [2mcan:[0m     run KQL, create custom detection (disabled), enable custom detection
+
+[33m>> WHY THIS MATTERS: [0mThree of the four are custom. Custom Security Copilot
+   agents can't get their own Entra Agent ID yet - the option is Microsoft-
+   built only - so the builder chose a user account.
+
+[1m[36mSTEP 2/3  Twelve controls, weighted[0m[0m
+[2m------------------------------------------------------------------------------[0m
+[2m  agent                      ID  OWN CRED   LP HITL EVAL  RED LOOP KILL  AUD COST LIFE  score[0m
+  Phishing Triage Agent   [32m   ok[0m[32m   ok[0m[32m   ok[0m[32m   ok[0m[32m   ok[0m[32m   ok[0m[32m   ok[0m[32m   ok[0m[32m   ok[0m[32m   ok[0m[32m   ok[0m[32m   ok[0m  [32m100  Ready[0m
+  Nordlys Enrichment      [31m    X[0m[31m    X[0m[32m   ok[0m[31m    X[0m[32m   ok[0m[31m    X[0m[31m    X[0m[32m   ok[0m[32m   ok[0m[32m   ok[0m[31m    X[0m[32m   ok[0m  [31m 42  Do not run[0m
+  Auto-Containment Bot    [31m    X[0m[31m    X[0m[31m    X[0m[31m    X[0m[31m    X[0m[31m    X[0m[31m    X[0m[31m    X[0m[31m    X[0m[31m    X[0m[31m    X[0m[31m    X[0m  [31m  0  Do not run[0m
+  Detection Drafter       [32m   ok[0m[31m    X[0m[32m   ok[0m[32m   ok[0m[32m   ok[0m[32m   ok[0m[32m   ok[0m[32m   ok[0m[32m   ok[0m[32m   ok[0m[32m   ok[0m[31m    X[0m  [32m 87  Ready[0m
+
+[33m>> WHY THIS MATTERS: [0mWeights favour the controls that limit blast radius:
+   identity, least privilege and approval on hard actions are 45 of the 100
+   points.
+
+[1m[36mSTEP 3/3  Why 'Auto-Containment Bot' scores 0[0m[0m
+[2m------------------------------------------------------------------------------[0m
+  [31m[FAIL][0m ID    plain app registration - invisible to agent governance
+  [31m[FAIL][0m OWN   no sponsor - nobody is accountable for it
+  [31m[FAIL][0m CRED  client secret (expires 2028-06-30)
+  [31m[FAIL][0m LP    3 unused grant(s): Directory.ReadWrite.All, Mail.ReadWrite, Policy.ReadWrite.ConditionalAccess - high privilege!
+  [31m[FAIL][0m HITL  no approval before: isolate device, disable user, delete email
+  [31m[FAIL][0m EVAL  no evaluation suite
+  [31m[FAIL][0m RED   never red-teamed
+  [31m[FAIL][0m LOOP  unbounded
+  [31m[FAIL][0m KILL  no documented stop
+  [31m[FAIL][0m AUD   stdout of a container nobody reads
+  [31m[FAIL][0m COST  none
+  [31m[FAIL][0m LIFE  Foundry classic connected agents retires 2027-03-31
+
+[33m>> WHY THIS MATTERS: [0mEvery failure here is a design decision, not a model
+   problem. A better prompt fixes none of them.
+
+[1m[31mVERDICT: 2 of 4 agents are ready. Design the controls before you design the prompt.[0m[0m

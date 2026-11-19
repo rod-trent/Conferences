@@ -1,0 +1,27 @@
+// A - IOC rule: the attacker IPs from INC-4471
+SigninLogs
+| where IPAddress in ("203.0.113.77", "203.0.113.91")
+| join kind=inner (OfficeActivity | where Operation == "New-InboxRule")
+    on $left.UserPrincipalName == $right.UserId
+
+// B - broad: any new inbox rule within 1h of a non-corporate sign-in
+let corp = dynamic(["198.51.100.0/24"]);
+SigninLogs
+| where not(ipv4_is_in_any_range(IPAddress, corp))
+| project UserPrincipalName, SigninTime = TimeGenerated
+| join kind=inner (OfficeActivity | where Operation == "New-InboxRule")
+    on $left.UserPrincipalName == $right.UserId
+| where TimeGenerated between (SigninTime .. SigninTime + 1h)
+
+// C - behavioural: risky sign-in, then a rule that hides finance mail
+SigninLogs
+| where RiskLevelDuringSignIn in ("medium", "high")
+| project UserPrincipalName, SigninTime = TimeGenerated
+| join kind=inner (
+    OfficeActivity
+    | where Operation in ("New-InboxRule", "Set-InboxRule")
+    | where Parameters has_any ("invoice", "payment", "bank", "faktura")
+    | where Parameters has_any ("RSS Feeds", "Conversation History", "Archive", "DeleteMessage")
+  ) on $left.UserPrincipalName == $right.UserId
+| where TimeGenerated between (SigninTime .. SigninTime + 1h)
+

@@ -1,0 +1,15 @@
+[2m==============================================================================[0m
+[1m Demo 04 self-test[0m
+[2m==============================================================================[0m
+
+  [32m[PASS][0m telemetry is deterministic
+  [32m[PASS][0m two known-bad cases in the window
+  [32m[PASS][0m A (IOC) misses the earlier AiTM node
+  [32m[PASS][0m B (broad) catches both
+  [32m[PASS][0m B fails the noise gate
+  [32m[PASS][0m C passes all three gates
+  [32m[PASS][0m C's only false positive is the AP clerk on holiday
+  [32m[PASS][0m no rule comes near the 150-per-run cap
+  [32m[PASS][0m ship-first day one: > 10 alerts, 0 true positives
+
+[32m  9/9 checks passed[0m
