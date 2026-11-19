@@ -20,7 +20,7 @@ const SPEAKERS = [
     links: [["FaLinkedin", "linkedin.com/in/rodtrent", "https://www.linkedin.com/in/rodtrent/"],
             ["FaXTwitter", "@rodtrent", "https://x.com/rodtrent"],
             ["FaGithub", "github.com/rod-trent", "https://github.com/rod-trent"]] },
-  { name: "Edward Walton", title: "", photo: "edward.png",
+  { name: "Edward Walton", title: "Sr Solution Engineer and Creator of The AI Security Insights podcast", photo: "edward.png",
     links: [["FaLinkedin", "linkedin.com/in/waltonedward", "https://www.linkedin.com/in/waltonedward/"]] },
 ];
 const SPEAKER_NAMES = SPEAKERS.map(p => p.name).join("  ·  ");
