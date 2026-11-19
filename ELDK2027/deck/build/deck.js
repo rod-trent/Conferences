@@ -1,6 +1,6 @@
 // deck.js - builds "The Agentic SOC - Experts Live Denmark 2027.pptx"
 //
-//   cd ELDK/deck/build && npm install && node deck.js
+//   cd ELDK2027/deck/build && npm install && node deck.js
 //
 // Structured deck: theme -> layouts with placeholders -> sections -> slides.
 // Facts are from Microsoft Learn as of 19 Nov 2026; see ../../SOURCES.md.
@@ -11,7 +11,7 @@ const { icon } = require("./icons");
 
 const SKILL = process.env.PPTX_SKILL_DIR;   // optional: path to apply_theme.js
 const OUT = path.resolve(__dirname, "../../SlideDecks/The Agentic SOC - Experts Live Denmark 2027.pptx");
-const SITE = "github.com/rod-trent/Conferences/tree/main/ELDK";
+const SITE = "github.com/rod-trent/Conferences/tree/main/ELDK2027";
 const DEMO_SITE = "eldk2027-demos.vercel.app";
 
 const SPEAKERS = [

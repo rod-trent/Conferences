@@ -1,6 +1,6 @@
 {
   "generated_note": "Built by web/build.py. Do not edit by hand.",
-  "repo": "https://github.com/rod-trent/Conferences/tree/main/ELDK",
+  "repo": "https://github.com/rod-trent/Conferences/tree/main/ELDK2027",
   "event": {
     "name": "Experts Live Denmark 2027",
     "location": "Bella Center Copenhagen",
@@ -17,9 +17,9 @@
       "accent": "#008BD2",
       "deck": {
         "file": "The Agentic SOC - Experts Live Denmark 2027.pptx",
-        "view": "https://view.officeapps.live.com/op/view.aspx?src=https%3A%2F%2Fraw.githubusercontent.com%2Frod-trent%2FConferences%2Fmain%2FELDK%2FSlideDecks%2FThe%2520Agentic%2520SOC%2520-%2520Experts%2520Live%2520Denmark%25202027.pptx",
-        "download": "https://github.com/rod-trent/Conferences/raw/main/ELDK/SlideDecks/The%20Agentic%20SOC%20-%20Experts%20Live%20Denmark%202027.pptx",
-        "powerpoint": "ms-powerpoint:ofe|u|https://raw.githubusercontent.com/rod-trent/Conferences/main/ELDK/SlideDecks/The%20Agentic%20SOC%20-%20Experts%20Live%20Denmark%202027.pptx"
+        "view": "https://view.officeapps.live.com/op/view.aspx?src=https%3A%2F%2Fraw.githubusercontent.com%2Frod-trent%2FConferences%2Fmain%2FELDK2027%2FSlideDecks%2FThe%2520Agentic%2520SOC%2520-%2520Experts%2520Live%2520Denmark%25202027.pptx",
+        "download": "https://github.com/rod-trent/Conferences/raw/main/ELDK2027/SlideDecks/The%20Agentic%20SOC%20-%20Experts%20Live%20Denmark%202027.pptx",
+        "powerpoint": "ms-powerpoint:ofe|u|https://raw.githubusercontent.com/rod-trent/Conferences/main/ELDK2027/SlideDecks/The%20Agentic%20SOC%20-%20Experts%20Live%20Denmark%202027.pptx"
       }
     }
   ],

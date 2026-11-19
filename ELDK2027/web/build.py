@@ -187,8 +187,8 @@ DEMOS_MANIFEST: list[dict] = [
 
 import urllib.parse
 
-REPO_RAW = "https://raw.githubusercontent.com/rod-trent/Conferences/main/ELDK/SlideDecks/"
-REPO_DL = "https://github.com/rod-trent/Conferences/raw/main/ELDK/SlideDecks/"
+REPO_RAW = "https://raw.githubusercontent.com/rod-trent/Conferences/main/ELDK2027/SlideDecks/"
+REPO_DL = "https://github.com/rod-trent/Conferences/raw/main/ELDK2027/SlideDecks/"
 OFFICE_VIEWER = "https://view.officeapps.live.com/op/view.aspx?src="
 
 
@@ -347,7 +347,7 @@ def build(out: Path) -> dict:
     # 3. Manifest.
     manifest = {
         "generated_note": "Built by web/build.py. Do not edit by hand.",
-        "repo": "https://github.com/rod-trent/Conferences/tree/main/ELDK",
+        "repo": "https://github.com/rod-trent/Conferences/tree/main/ELDK2027",
         "event": {
             "name": "Experts Live Denmark 2027",
             "location": "Bella Center Copenhagen",

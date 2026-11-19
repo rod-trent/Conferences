@@ -5,7 +5,7 @@
 ## Rebuild
 
 ```bash
-cd ELDK/deck/build
+cd ELDK2027/deck/build
 npm install                      # pptxgenjs, react-icons, react, react-dom, sharp
 node art.js                      # only if you change the background art (also writes the site's copy)
 node deck.js                     # writes ../../SlideDecks/The Agentic SOC - Experts Live Denmark 2027.pptx
