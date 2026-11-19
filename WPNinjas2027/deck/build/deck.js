@@ -20,7 +20,7 @@ const SPEAKERS = [
     links: [["FaLinkedin", "linkedin.com/in/rodtrent", "https://www.linkedin.com/in/rodtrent/"],
             ["FaXTwitter", "@rodtrent", "https://x.com/rodtrent"],
             ["FaGithub", "github.com/rod-trent", "https://github.com/rod-trent"]] },
-  { name: "Edward Walton", title: "Sr Solution Engineer and Creator of The AI Security Insights podcast", photo: "edward.png",
+  { name: "Edward Walton", title: "Sr Solution Engineer, Microsoft\nCreator of The AI Security Insights podcast", photo: "edward.png",
     links: [["FaLinkedin", "linkedin.com/in/waltonedward", "https://www.linkedin.com/in/waltonedward/"]] },
 ];
 const SPEAKER_NAMES = SPEAKERS.map(p => p.name).join("  ·  ");
@@ -200,7 +200,13 @@ async function demoSlide(n, title, id, watch, variants, cmd, notes) {
       card(s, x, y, cw, 4.9);
       s.addImage({ path: path.join(__dirname, sp.photo), x: x + 0.35, y: y + 0.4, w: 2.3, h: 2.3, objectName: "speaker-photo-" + i });
       txt(s, sp.name, { x: x + 2.95, y: y + 0.55, w: cw - 3.2, h: 0.6, fontSize: 28, bold: true, color: WHITE });
-      if (sp.title) txt(s, sp.title, { x: x + 2.95, y: y + 1.2, w: cw - 3.2, h: 1.2, fontSize: 16, color: EMBER });
+      if (sp.title) {
+        // First line is the role (ember); any further lines are secondary (body colour).
+        const parts = sp.title.split("\n");
+        txt(s, parts.map((t, k) => ({ text: t, options: { color: k ? BODY : EMBER, fontSize: k ? 14 : 16,
+          paraSpaceBefore: k ? 8 : 0, breakLine: k < parts.length - 1 } })),
+          { x: x + 2.95, y: y + 1.2, w: cw - 3.2, h: 1.4, fontSize: 16 });
+      }
       for (let j = 0; j < sp.links.length; j++) {
         const [ic, label, url] = sp.links[j], ly = y + 3.0 + j * 0.6;
         await badge(s, x + 0.35, ly, 0.45, ic, HEX.raised);
