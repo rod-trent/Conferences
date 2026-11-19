@@ -14,6 +14,17 @@ const OUT = path.resolve(__dirname, "../../SlideDecks/Defender for Agents - WPNi
 const SITE = "github.com/rod-trent/Conferences/tree/main/WPNinjas2027";
 const DEMO_SITE = "wpninjas2027-demos.vercel.app";
 
+// Speakers. Leave `title` empty to omit the line.
+const SPEAKERS = [
+  { name: "Rod Trent", title: "Sr. Program Manager, Microsoft", photo: "rod.png",
+    links: [["FaLinkedin", "linkedin.com/in/rodtrent", "https://www.linkedin.com/in/rodtrent/"],
+            ["FaXTwitter", "@rodtrent", "https://x.com/rodtrent"],
+            ["FaGithub", "github.com/rod-trent", "https://github.com/rod-trent"]] },
+  { name: "Edward Walton", title: "", photo: "edward.png",
+    links: [["FaLinkedin", "linkedin.com/in/waltonedward", "https://www.linkedin.com/in/waltonedward/"]] },
+];
+const SPEAKER_NAMES = SPEAKERS.map(p => p.name).join("  ·  ");
+
 const THEME = {
   name: "WPNinjas Night Desert",
   headFontFace: "Calibri",
@@ -30,7 +41,7 @@ const pres = new pptxgen();
 pres.layout = "LAYOUT_WIDE"; // 13.333 x 7.5
 pres.title = "Defender for Agents: Extending Threat Protection to Autonomous Workflows";
 pres.subject = "Workplace Ninjas US 2027";
-pres.author = "Rod Trent";
+pres.author = "Rod Trent, Edward Walton";
 pres.company = "Workplace Ninjas US 2027";
 pres.theme = { headFontFace: THEME.headFontFace, bodyFontFace: THEME.bodyFontFace };
 const C = pres.SchemeColor;
@@ -144,7 +155,7 @@ async function demoSlide(n, title, id, watch, variants, cmd, notes) {
     const s = pres.addSlide({ masterName: "TITLE", sectionTitle });
     s.addText("Defender for Agents", { placeholder: "title" });
     s.addText("Extending Threat Protection to Autonomous Workflows", { placeholder: "body" });
-    txt(s, [{ text: "Rod Trent", options: { bold: true, color: WHITE, breakLine: true } },
+    txt(s, [{ text: SPEAKER_NAMES, options: { bold: true, color: WHITE, breakLine: true } },
             { text: "Workplace Ninjas US 2027  ·  Scottsdale, AZ  ·  11–13 January", options: { color: BODY } }],
       { x: M, y: 4.85, w: 8, h: 0.8, fontSize: 18 });
     // Demo-site QR, top right, clear of the saguaros in the background art.
@@ -181,15 +192,20 @@ async function demoSlide(n, title, id, watch, variants, cmd, notes) {
 
   // 3 ── About
   {
-    const s = content("About me",
-      "~1 min. Keep it short. Everything in this session is in the Conferences repo on GitHub - slides, demo code and the browser demo site. QR code is on the last slide.");
-    s.addImage({ path: path.join(__dirname, "rod.png"), x: M + 0.2, y: 1.7, w: 3.6, h: 3.6, objectName: "speaker-photo" });
-    txt(s, "Rod Trent", { x: 5.0, y: 1.9, w: 7.5, h: 0.8, fontSize: 40, bold: true, color: WHITE });
-    txt(s, "Sr. Program Manager / Security MVP Program Lead, Microsoft", { x: 5.0, y: 2.75, w: 7.5, h: 0.5, fontSize: 20, color: EMBER });
-    const rows = [["FaLinkedin", "linkedin.com/in/rodtrent"], ["FaXTwitter", "@rodtrent"], ["FaGithub", "github.com/rod-trent"]];
-    for (let i = 0; i < rows.length; i++) {
-      await badge(s, 5.0, 3.6 + i * 0.75, 0.5, rows[i][0], PANEL);
-      txt(s, rows[i][1], { x: 5.7, y: 3.6 + i * 0.75, w: 6, h: 0.5, fontSize: 18, valign: "middle" });
+    const s = content("About us",
+      "~1 min. Keep it short - one line each. Everything in this session is in the Conferences repo on GitHub - slides, demo code and the browser demo site. QR codes are on the title slide and the 'Take it home' slide.");
+    const cw = (W - 2 * M - 0.3) / 2;
+    for (let i = 0; i < SPEAKERS.length; i++) {
+      const sp = SPEAKERS[i], x = M + i * (cw + 0.3), y = 1.55;
+      card(s, x, y, cw, 4.9);
+      s.addImage({ path: path.join(__dirname, sp.photo), x: x + 0.35, y: y + 0.4, w: 2.3, h: 2.3, objectName: "speaker-photo-" + i });
+      txt(s, sp.name, { x: x + 2.95, y: y + 0.55, w: cw - 3.2, h: 0.6, fontSize: 28, bold: true, color: WHITE });
+      if (sp.title) txt(s, sp.title, { x: x + 2.95, y: y + 1.2, w: cw - 3.2, h: 1.2, fontSize: 16, color: EMBER });
+      for (let j = 0; j < sp.links.length; j++) {
+        const [ic, label, url] = sp.links[j], ly = y + 3.0 + j * 0.6;
+        await badge(s, x + 0.35, ly, 0.45, ic, HEX.raised);
+        txt(s, [{ text: label, options: { hyperlink: { url } } }], { x: x + 1.0, y: ly, w: cw - 1.3, h: 0.45, fontSize: 16, color: BODY, valign: "middle" });
+      }
     }
   }
 
@@ -842,7 +858,8 @@ client.chat.completions.create(
     const s = pres.addSlide({ masterName: "SECTION", sectionTitle });
     s.addText("Thank you. Questions?", { placeholder: "title" });
     s.addText("Agents act. Defender now checks the action first - if you let it block.", { placeholder: "body" });
-    txt(s, "Rod Trent  ·  linkedin.com/in/rodtrent  ·  @rodtrent", { x: M, y: 4.85, w: 10, h: 0.5, fontSize: 18, color: EMBER });
+    txt(s, [{ text: "Rod Trent  ·  linkedin.com/in/rodtrent", options: { breakLine: true } }, { text: "Edward Walton  ·  linkedin.com/in/waltonedward" }],
+      { x: M, y: 4.85, w: 10, h: 0.8, fontSize: 18, color: EMBER });
     s.addImage({ path: path.join(__dirname, "logo-white.png"), x: M, y: 0.6, w: 3.3, h: 0.45 });
     s.addNotes("Q&A. Remind them the demo site works offline once loaded, and the repo's SOURCES.md lists every Learn page so they can check for changes - this area moved a lot in 2026.");
   }

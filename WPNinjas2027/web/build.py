@@ -220,7 +220,7 @@ SESSIONS = {
         "title": "Defender for Agents",
         "subtitle": "Extending Threat Protection to Autonomous Workflows",
         "slot": "Workplace Ninjas US 2027 · Scottsdale, AZ · 11–13 January 2027",
-        "presenters": "Rod Trent",
+        "presenters": "Rod Trent · Edward Walton",
         "accent": "#FF7A2F",
         "deck": deck_links(DECK_FILE),
     },

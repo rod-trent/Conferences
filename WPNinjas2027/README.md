@@ -1,4 +1,4 @@
-# Workplace Ninjas US 2027 — Rod Trent
+# Workplace Ninjas US 2027 — Rod Trent · Edward Walton
 
 [![WPNinjas US 2027](https://img.shields.io/badge/Workplace%20Ninjas%20US-2027-FF7A2F?style=for-the-badge)](https://workplaceninjas.us/)
 [![Live demos](https://img.shields.io/badge/live%20demos-wpninjas2027--demos.vercel.app-6FB7FF?style=for-the-badge&logo=vercel&logoColor=white)](https://wpninjas2027-demos.vercel.app)
@@ -13,6 +13,8 @@ before you point any of it at a production tenant.
 ---
 
 ## 🛡️ Defender for Agents: Extending Threat Protection to Autonomous Workflows
+
+[Rod Trent](https://linkedin.com/in/rodtrent) · [Edward Walton](https://www.linkedin.com/in/waltonedward/)
 
 AI agents interact with enterprise data in ways traditional applications never
 could. This session demonstrates how Microsoft Defender capabilities extend to
