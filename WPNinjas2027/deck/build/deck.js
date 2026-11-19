@@ -794,11 +794,25 @@ client.chat.completions.create(
   {
     const s = content("Take it home",
       "~1 min. Everything is in the repo: deck, six demos that run offline with no dependencies, the browser demo site, the KQL, and a sources file listing every Learn page used.");
-    s.addImage({ path: path.join(__dirname, "qr-repo.png"), x: M, y: 1.5, w: 3.4, h: 3.4, objectName: "qr-repo" });
-    txt(s, [{ text: "github.com/rod-trent/Conferences", options: { breakLine: true } }, { text: "  /tree/main/WPNinjas2027" }], { x: M, y: 5.05, w: 4.1, h: 0.6, fontSize: 13, color: STEEL });
-    txt(s, [{ text: "Run the demos in your browser:", options: { color: MUTED, breakLine: true } },
-            { text: DEMO_SITE, options: { color: EMBER, bold: true, hyperlink: { url: "https://" + DEMO_SITE } } }],
-      { x: M, y: 5.8, w: 4.2, h: 0.6, fontSize: 13 });
+    // Two QR codes side by side: the live demo site, then the repo.
+    const qr = 2.2, qrGap = 0.35;
+    const qrs = [
+      { img: "qr-demo-site.png", name: "qr-demo-site", head: "Run the demos", col: EMBER,
+        lines: ["wpninjas2027-demos", ".vercel.app"], url: "https://" + DEMO_SITE },
+      { img: "qr-repo.png", name: "qr-repo", head: "Get the code", col: STEEL,
+        lines: ["github.com/rod-trent", "/Conferences"], url: "https://" + SITE },
+    ];
+    for (let i = 0; i < qrs.length; i++) {
+      const q = qrs[i], x = M + i * (qr + qrGap);
+      s.addImage({ path: path.join(__dirname, q.img), x, y: 1.6, w: qr, h: qr, objectName: q.name,
+        hyperlink: { url: q.url } });
+      txt(s, q.head, { x, y: 3.95, w: qr, h: 0.4, fontSize: 17, bold: true, color: q.col });
+      txt(s, [{ text: q.lines[0], options: { breakLine: true, hyperlink: { url: q.url } } },
+              { text: q.lines[1], options: { hyperlink: { url: q.url } } }],
+        { x, y: 4.35, w: qr, h: 0.6, fontSize: 12, color: BODY });
+    }
+    txt(s, "Six demos that run offline, the browser demo site, the KQL, and every Learn source.",
+      { x: M, y: 5.35, w: 2 * qr + qrGap, h: 0.7, fontSize: 13, color: MUTED });
     const links = [
       ["Threat protection for AI services", "learn.microsoft.com/azure/defender-for-cloud/ai-threat-protection"],
       ["Alerts for AI services", "learn.microsoft.com/azure/defender-for-cloud/alerts-ai-workloads"],
@@ -811,8 +825,8 @@ client.chat.completions.create(
     for (let i = 0; i < links.length; i++) {
       const y = 1.5 + i * 0.72;
       txt(s, [{ text: links[i][0], options: { bold: true, color: WHITE, breakLine: true } },
-              { text: links[i][1], options: { color: STEEL, fontSize: 12, hyperlink: { url: "https://" + links[i][1] } } }],
-        { x: 5.0, y, w: W - M - 5.0, h: 0.65, fontSize: 15 });
+              { text: links[i][1], options: { color: STEEL, fontSize: 11, hyperlink: { url: "https://" + links[i][1] } } }],
+        { x: 5.8, y, w: W - M - 5.8, h: 0.65, fontSize: 15 });
     }
   }
 
