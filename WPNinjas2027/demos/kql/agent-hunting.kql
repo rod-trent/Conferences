@@ -1,0 +1,80 @@
+// Defender for Agents - WPNinjas US 2027
+// Advanced hunting queries from demos 04 and 05. Paste into Defender XDR > Hunting > Advanced hunting.
+// Table and ActionType names are from Microsoft Learn. Values inside AdditionalFields / RawEventData
+// vary by tenant and over time - check them against your own data before you build detections on them.
+
+// ===================== Inventory (demo 04) =====================
+
+// 1. Latest state of every agent (the query on Microsoft Learn's AgentsInfo page)
+AgentsInfo
+| summarize arg_max(Timestamp, *) by AgentId
+| where LifecycleStatus != "Deleted"
+
+// 2. Published agents with no Entra agent ID - cannot be scoped into a block rule
+AgentsInfo
+| summarize arg_max(Timestamp, *) by AgentId
+| where LifecycleStatus == "Active" and PublishedStatus == "Published"
+| where isempty(EntraAgentId)
+| project AgentName, Platform, Owners, SharedWith
+
+// 3. Agents that read outsider-writable content AND can send it somewhere
+AgentsInfo
+| summarize arg_max(Timestamp, *) by AgentId
+| where tostring(DeclaredDataSources) has_any ("Outlook", "Web search", "Public website")
+   or tostring(Triggers) has_any ("Email", "GitHub issues")
+| where tostring(DeclaredTools) has_any ("SendEmail", "HttpRequest", "PostToWebhook", "ShareFile")
+| project AgentName, Platform, DeclaredDataSources, DeclaredTools, Owners
+
+// 4. Ownerless agents
+AgentsInfo
+| summarize arg_max(Timestamp, *) by AgentId
+| where LifecycleStatus == "Active" and array_length(Owners) == 0
+
+
+// ===================== Hunting (demo 05) =====================
+// Hunt 1: Every AI and agent alert this week
+AlertInfo
+| where Timestamp > ago(7d)
+| where Title has_any ("Jailbreak", "ASCII Smuggling", "prompt injection",
+                       "Anomalous tool invocation", "LLM Reconnaissance")
+| project Timestamp, Title, Severity, ServiceSource, AlertId
+| order by Timestamp asc
+
+// Hunt 2: Real-time protection behaviors: blocked AND audited
+BehaviorInfo
+| where Timestamp > ago(7d)
+| where Categories has "AI" or Title has "agent"     // confirm values in your tenant
+| extend AgentId = tostring(AdditionalFields.AgentId),
+         ConversationId = tostring(AdditionalFields.ConversationId),
+         DetectionType = tostring(AdditionalFields.DetectionType)
+| project Timestamp, ActionType, DetectionType, AgentId, ConversationId
+
+// Hunt 3: What the agent actually did after an audited behavior
+let audited = BehaviorInfo
+    | where Timestamp > ago(7d) and ActionType == "Audited"
+    | project ConversationId = tostring(AdditionalFields.ConversationId);
+CloudAppEvents
+| where Timestamp > ago(7d)
+| where ActionType in ("ExecuteToolBySDK", "ExecuteToolByGateway", "ExecuteToolByMCPServer")
+| extend ConversationId = tostring(RawEventData.ConversationId),
+         AgentId = tostring(RawEventData.AgentId)
+| where ConversationId in (audited)
+| project Timestamp, ConversationId, AgentId, Tool = RawEventData.ToolName,
+          Target = RawEventData.Target, Result = RawEventData.Result
+
+// Hunt 4: Same attacker, other agents (pivot on IP)
+let attackerIPs = AlertEvidence
+    | where Timestamp > ago(7d) and EntityType == "Ip"
+    | distinct RemoteIP;
+CloudAppEvents
+| where Timestamp > ago(7d) and ActionType == "InvokeAgent"
+| where IPAddress in (attackerIPs)
+| summarize Invocations = count(), FirstSeen = min(Timestamp)
+    by IPAddress, AgentId = tostring(RawEventData.AgentId)
+
+// Hunt 5: Enrich: who owns the agents involved, and can we block them?
+AgentsInfo
+| summarize arg_max(Timestamp, *) by AgentId
+| where AgentId in ("cs-7f21", "fd-1a09", "cs-9e88")   // from hunts 2-4
+| project AgentName, Platform, EntraAgentId, Owners, ToolsAuthenticationType
+

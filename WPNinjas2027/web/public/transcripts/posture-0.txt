@@ -1,0 +1,53 @@
+[2m==============================================================================[0m
+[1m Demo 04 - Find Every Agent[0m
+[2m AgentsInfo: 7 live agents (latest record per AgentId)[0m
+[2m==============================================================================[0m
+[2m  Synthetic data. 'Contoso Outdoors', its agents, users and incidents are[0m
+[2m  fabricated for teaching. Detection logic here is a local stand-in for the[0m
+[2m  Microsoft services named - it illustrates the flow, it is not the product.[0m
+
+[1m[36mSTEP 1/3  Inventory - every agent, every platform[0m[0m
+[2m------------------------------------------------------------------------------[0m
+[2m  Agent                         Platform        Status     Risk           Indicators[0m
+  Vendor Desk                   Copilot Studio  Published  [31mHigh[0m           Indirect Prompt Injection Exposure, Privileged Business-system Access, Active Threat
+  Trail Concierge               Foundry         Published  [31mHigh[0m           Indirect Prompt Injection Exposure, High-usage Agent
+  Q3 Promo Bot                  Copilot Studio  Published  [31mHigh[0m           Weak Instructions, Indirect Prompt Injection Exposure
+  HR Policy Bot                 Copilot Studio  Published  [33mMedium[0m         Weak Instructions, High-usage Agent
+  Invoice Matcher               Copilot Studio  Published  [33mMedium[0m         Privileged Business-system Access, High-usage Agent
+  Release Notes Writer          Foundry         Published  [32mNo known risk[0m  [2m-[0m
+  code-agent on CO-DEV-LT-0412  Local           Published  [2mNot evaluated[0m  [2m-[0m
+
+  [31mHigh[0m: 3   [33mMedium[0m: 2   [32mNo known risk[0m: 1   [2mNot evaluated[0m: 1
+
+[33m>> WHY THIS MATTERS: [0mThree of these agents read content an outsider can write
+   AND can act on it. That combination - untrusted input plus a consequential
+   tool - is the definition of an XPIA target.
+
+[1m[36mSTEP 2/3  Protection gaps - what stops Defender from blocking[0m[0m
+[2m------------------------------------------------------------------------------[0m
+  [1mHR Policy Bot[0m [2m(Microsoft Copilot Studio)[0m
+    [33m![0m Shared with everyone in the tenant
+  [1mInvoice Matcher[0m [2m(Microsoft Copilot Studio)[0m
+    [33m![0m No Microsoft Entra agent ID - cannot be scoped into a real-time BLOCK rule or Conditional Access
+    [33m![0m Tools run as the maker's credentials - every user gets the maker's access
+  [1mQ3 Promo Bot[0m [2m(Microsoft Copilot Studio)[0m
+    [33m![0m No Microsoft Entra agent ID - cannot be scoped into a real-time BLOCK rule or Conditional Access
+    [33m![0m No owner - nobody to approve a block, answer an alert or retire it
+    [33m![0m Tools run as the maker's credentials - every user gets the maker's access
+    [33m![0m Shared with everyone in the tenant
+  [1mcode-agent on CO-DEV-LT-0412[0m [2m(Local)[0m
+    [33m![0m Local agent: protected by Defender for Endpoint runtime protection, not cloud rules
+
+[33m>> WHY THIS MATTERS: [0mPosture tells you what is risky. These gaps tell you what
+   you could not protect even if you wanted to - an agent with no Entra agent
+   ID never appears in the real-time rule picker.
+
+[1m[36mSTEP 3/3  Recommendations for Foundry agents (verbatim from Learn)[0m[0m
+[2m------------------------------------------------------------------------------[0m
+[2m  Since 1 July 2026 agent discovery and posture are licensed through Microsoft Agent 365.[0m
+  [1mTrail Concierge[0m       Foundry AI Agent with Indirect prompt Injection risk should use enhanced guardrails controls (Preview)
+  [1mTrail Concierge[0m       Foundry AI Agent with Indirect prompt Injection risk should require human in the loop control for MCP tool actions (Preview)
+  [1mTrail Concierge[0m       Foundry AI Agent's Guardrails should include Jailbreak control (Preview)
+  [1mTrail Concierge[0m       Foundry Agent's MCP tool should be configured with allowed tools list (Preview)
+
+[1m[32mVERDICT: Inventory first, then scope: the High agents go into a custom BLOCK rule this week.[0m[0m

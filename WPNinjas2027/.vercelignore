@@ -1,0 +1,5 @@
+SlideDecks/
+deck/
+demos/
+*.pptx
+run-all-tests.py

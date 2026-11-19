@@ -1,0 +1,14 @@
+[2m==============================================================================[0m
+[1m Demo 05 self-test[0m
+[2m==============================================================================[0m
+
+  [32m[PASS][0m hunt 1 finds model + endpoint agent alerts
+  [32m[PASS][0m hunt 1 ignores unrelated alerts
+  [32m[PASS][0m hunt 2 returns one blocked and one audited
+  [32m[PASS][0m hunt 3 finds the audited SendEmail that succeeded
+  [32m[PASS][0m hunt 3 excludes the blocked conversation
+  [32m[PASS][0m hunt 4 pivots the attacker IP to 3 agents
+  [32m[PASS][0m hunt 5: leaking agent has no Entra agent ID and no owner
+  [32m[PASS][0m all CloudAppEvents agent ActionTypes are documented values
+
+[32m  8/8 checks passed[0m

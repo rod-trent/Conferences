@@ -1,0 +1,35 @@
+{
+  "_note": "Synthetic. Alert titles are verbatim from Microsoft Learn; ServiceSource, Categories and AdditionalFields values are illustrative.",
+  "AlertInfo": [
+    {"Timestamp": "2026-12-01T14:02:11Z", "AlertId": "da-1001", "Title": "A Jailbreak attempt on an Azure AI model deployment was blocked by Azure AI Content Safety Prompt Shields", "Severity": "Medium", "ServiceSource": "Microsoft Defender for Cloud"},
+    {"Timestamp": "2026-12-01T14:05:40Z", "AlertId": "da-1002", "Title": "ASCII Smuggling prompt injection detected", "Severity": "High", "ServiceSource": "Microsoft Defender for Cloud"},
+    {"Timestamp": "2026-12-02T07:30:00Z", "AlertId": "id-2001", "Title": "Impossible travel activity", "Severity": "Medium", "ServiceSource": "Microsoft Defender for Cloud Apps"},
+    {"Timestamp": "2026-12-03T10:05:22Z", "AlertId": "de-3001", "Title": "Suspicious AI prompt injection", "Severity": "High", "ServiceSource": "Microsoft Defender for Endpoint"}
+  ],
+  "AlertEvidence": [
+    {"Timestamp": "2026-12-01T14:02:11Z", "AlertId": "da-1001", "EntityType": "Ip", "RemoteIP": "203.0.113.77"},
+    {"Timestamp": "2026-12-01T14:02:11Z", "AlertId": "da-1001", "EntityType": "User", "RemoteIP": ""},
+    {"Timestamp": "2026-12-01T14:05:40Z", "AlertId": "da-1002", "EntityType": "Ip", "RemoteIP": "203.0.113.77"},
+    {"Timestamp": "2026-12-03T10:05:22Z", "AlertId": "de-3001", "EntityType": "Machine", "RemoteIP": ""}
+  ],
+  "BehaviorInfo": [
+    {"Timestamp": "2026-12-02T09:16:03Z", "BehaviorId": "bh-01", "ActionType": "Blocked", "Title": "Agent tool invocation blocked - Unsafe email domain", "Categories": ["AI agent"],
+     "AdditionalFields": {"AgentId": "cs-7f21", "ConversationId": "conv-5521", "DetectionType": "Unsafe email domain", "Tool": "SendEmail"}},
+    {"Timestamp": "2026-12-02T11:41:27Z", "BehaviorId": "bh-02", "ActionType": "Audited", "Title": "Agent tool invocation audited - Malicious content propagation", "Categories": ["AI agent"],
+     "AdditionalFields": {"AgentId": "cs-9e88", "ConversationId": "conv-7730", "DetectionType": "Malicious content propagation", "Tool": "SendEmail"}}
+  ],
+  "CloudAppEvents": [
+    {"Timestamp": "2026-12-01T14:01:50Z", "ActionType": "InvokeAgent", "IPAddress": "203.0.113.77", "RawEventData": {"AgentId": "fd-1a09", "ConversationId": "conv-1001"}},
+    {"Timestamp": "2026-12-01T14:03:02Z", "ActionType": "InvokeAgent", "IPAddress": "203.0.113.77", "RawEventData": {"AgentId": "fd-1a09", "ConversationId": "conv-1002"}},
+    {"Timestamp": "2026-12-01T14:09:12Z", "ActionType": "InvokeAgent", "IPAddress": "203.0.113.77", "RawEventData": {"AgentId": "cs-9e88", "ConversationId": "conv-1003"}},
+    {"Timestamp": "2026-12-01T14:10:44Z", "ActionType": "InvokeAgent", "IPAddress": "203.0.113.77", "RawEventData": {"AgentId": "cs-7f21", "ConversationId": "conv-1004"}},
+    {"Timestamp": "2026-12-01T14:11:30Z", "ActionType": "InvokeAgent", "IPAddress": "203.0.113.77", "RawEventData": {"AgentId": "cs-9e88", "ConversationId": "conv-1005"}},
+    {"Timestamp": "2026-12-02T09:15:40Z", "ActionType": "InvokeAgent", "IPAddress": "10.20.4.18", "RawEventData": {"AgentId": "cs-7f21", "ConversationId": "conv-5521"}},
+    {"Timestamp": "2026-12-02T09:15:44Z", "ActionType": "ExecuteToolByGateway", "IPAddress": "10.20.4.18", "RawEventData": {"AgentId": "cs-7f21", "ConversationId": "conv-5521", "ToolName": "ReadMailbox", "Target": "AP-Invoices", "Result": "Success"}},
+    {"Timestamp": "2026-12-02T09:15:51Z", "ActionType": "InferenceCall", "IPAddress": "10.20.4.18", "RawEventData": {"AgentId": "cs-7f21", "ConversationId": "conv-5521"}},
+    {"Timestamp": "2026-12-02T11:41:02Z", "ActionType": "InvokeAgent", "IPAddress": "10.20.9.77", "RawEventData": {"AgentId": "cs-9e88", "ConversationId": "conv-7730"}},
+    {"Timestamp": "2026-12-02T11:41:09Z", "ActionType": "ExecuteToolBySDK", "IPAddress": "10.20.9.77", "RawEventData": {"AgentId": "cs-9e88", "ConversationId": "conv-7730", "ToolName": "WebFetch", "Target": "contoso-outdoors.com/promo", "Result": "Success"}},
+    {"Timestamp": "2026-12-02T11:41:29Z", "ActionType": "ExecuteToolByGateway", "IPAddress": "10.20.9.77", "RawEventData": {"AgentId": "cs-9e88", "ConversationId": "conv-7730", "ToolName": "SendEmail", "Target": "drop@paste-drop.io", "Result": "Success"}},
+    {"Timestamp": "2026-12-02T12:00:00Z", "ActionType": "InvokeAgent", "IPAddress": "10.20.1.5", "RawEventData": {"AgentId": "fd-5c30", "ConversationId": "conv-8000"}}
+  ]
+}

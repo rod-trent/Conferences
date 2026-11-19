@@ -1,0 +1,15 @@
+[2m==============================================================================[0m
+[1m Demo 03 self-test[0m
+[2m==============================================================================[0m
+
+  [32m[PASS][0m block: stops at the poisoned tool response
+  [32m[PASS][0m block: one alert, correct title
+  [32m[PASS][0m agent ignores response block -> curl|bash still blocked at request
+  [32m[PASS][0m agent ignores response block -> exfil still blocked
+  [32m[PASS][0m agent ignores response block -> legitimate pytest still runs
+  [32m[PASS][0m audit: alerts raised
+  [32m[PASS][0m audit: nothing blocked, damage done
+  [32m[PASS][0m disabled: no alerts
+  [32m[PASS][0m smuggled README is clean to a human
+
+[32m  9/9 checks passed[0m

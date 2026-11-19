@@ -1,0 +1,30 @@
+[2m==============================================================================[0m
+[1m Demo 05 - Hunt the Agent Kill Chain[0m
+[2m Defender XDR advanced hunting, 7 days, Contoso Outdoors[0m
+[2m==============================================================================[0m
+[2m  Synthetic data. 'Contoso Outdoors', its agents, users and incidents are[0m
+[2m  fabricated for teaching. Detection logic here is a local stand-in for the[0m
+[2m  Microsoft services named - it illustrates the flow, it is not the product.[0m
+
+[1m[36mSTEP 3/5  What the agent actually did after an audited behavior[0m[0m
+[2m------------------------------------------------------------------------------[0m
+  [36mlet audited = BehaviorInfo[0m
+  [36m    | where Timestamp > ago(7d) and ActionType == "Audited"[0m
+  [36m    | project ConversationId = tostring(AdditionalFields.ConversationId);[0m
+  [36mCloudAppEvents[0m
+  [36m| where Timestamp > ago(7d)[0m
+  [36m| where ActionType in ("ExecuteToolBySDK", "ExecuteToolByGateway", "ExecuteToolByMCPServer")[0m
+  [36m| extend ConversationId = tostring(RawEventData.ConversationId),[0m
+  [36m         AgentId = tostring(RawEventData.AgentId)[0m
+  [36m| where ConversationId in (audited)[0m
+  [36m| project Timestamp, ConversationId, AgentId, Tool = RawEventData.ToolName,[0m
+  [36m          Target = RawEventData.Target, Result = RawEventData.Result[0m
+
+  [2mTimestamp             ConversationId  AgentId  Tool       Target                      Result   [0m
+  2026-12-02T11:41:09Z  conv-7730       cs-9e88  WebFetch   contoso-outdoors.com/promo  Success  
+  2026-12-02T11:41:29Z  conv-7730       cs-9e88  SendEmail  drop@paste-drop.io          Success  
+[2m  (2 rows)[0m
+
+[33m>> WHY THIS MATTERS: [0mThis is the finding. The audited SendEmail succeeded - to
+   a paste site. The alert was accurate and the data still left. Audit is
+   visibility, not protection.

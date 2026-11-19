@@ -1,0 +1,391 @@
+{
+  "generated_note": "Built by web/build.py. Do not edit by hand.",
+  "repo": "https://github.com/rod-trent/Conferences/tree/main/WPNinjas2027",
+  "event": {
+    "name": "Workplace Ninjas US 2027",
+    "location": "The Scott Resort & Spa, Scottsdale, AZ",
+    "dates": "11\u201313 January 2027",
+    "url": "https://workplaceninjas.us/"
+  },
+  "sessions": [
+    {
+      "id": "agents",
+      "title": "Defender for Agents",
+      "subtitle": "Extending Threat Protection to Autonomous Workflows",
+      "slot": "Workplace Ninjas US 2027 \u00b7 Scottsdale, AZ \u00b7 11\u201313 January 2027",
+      "presenters": "Rod Trent",
+      "accent": "#FF7A2F",
+      "deck": {
+        "file": "Defender for Agents - WPNinjas US 2027.pptx",
+        "view": "https://view.officeapps.live.com/op/view.aspx?src=https%3A%2F%2Fraw.githubusercontent.com%2Frod-trent%2FConferences%2Fmain%2FWPNinjas2027%2FSlideDecks%2FDefender%2520for%2520Agents%2520-%2520WPNinjas%2520US%25202027.pptx",
+        "download": "https://github.com/rod-trent/Conferences/raw/main/WPNinjas2027/SlideDecks/Defender%20for%20Agents%20-%20WPNinjas%20US%202027.pptx",
+        "powerpoint": "ms-powerpoint:ofe|u|https://raw.githubusercontent.com/rod-trent/Conferences/main/WPNinjas2027/SlideDecks/Defender%20for%20Agents%20-%20WPNinjas%20US%202027.pptx"
+      }
+    }
+  ],
+  "pyAssets": [
+    "common/term.py",
+    "common/shields.py",
+    "common/runtime.py",
+    "01-shield-the-model/shield_and_alert.py",
+    "02-stop-the-tool-call/runtime_protection.py",
+    "03-agent-on-the-endpoint/local_agent_protection.py",
+    "04-find-every-agent/agent_posture.py",
+    "04-find-every-agent/agentsinfo_sample.json",
+    "05-hunt-the-agent-kill-chain/hunt_agents.py",
+    "05-hunt-the-agent-kill-chain/hunting_sample.json",
+    "06-red-team-your-agent/red_team_agent.py",
+    "06-red-team-your-agent/attack_corpus.json"
+  ],
+  "demos": [
+    {
+      "id": "shield",
+      "session": "agents",
+      "title": "Shield the Model, Alert the SOC",
+      "subtitle": "Demo 1 \u00b7 slide 18",
+      "blurb": "Prompt Shields annotates a jailbreak, Defender for AI Services raises the alert by its exact Learn name, and the end-user context tells the SOC who and where. Then switch the guardrail to annotate-only and watch 'blocked' become 'detected'.",
+      "kind": "run",
+      "script": "01-shield-the-model/shield_and_alert.py",
+      "variants": [
+        {
+          "label": "Jailbreak, guardrail blocks",
+          "args": [
+            "--fast"
+          ],
+          "primary": true,
+          "transcript": "shield-0"
+        },
+        {
+          "label": "Annotate-only guardrail",
+          "args": [
+            "--annotate-only",
+            "--fast"
+          ],
+          "transcript": "shield-1"
+        },
+        {
+          "label": "ASCII smuggling",
+          "args": [
+            "--scenario",
+            "smuggling",
+            "--fast"
+          ],
+          "highlight": true,
+          "transcript": "shield-2"
+        },
+        {
+          "label": "Attack in a grounding doc",
+          "args": [
+            "--scenario",
+            "document",
+            "--fast"
+          ],
+          "transcript": "shield-3"
+        },
+        {
+          "label": "No user context",
+          "args": [
+            "--no-user-context",
+            "--fast"
+          ],
+          "transcript": "shield-4"
+        },
+        {
+          "label": "Benign control",
+          "args": [
+            "--scenario",
+            "benign",
+            "--fast"
+          ],
+          "transcript": "shield-5"
+        },
+        {
+          "label": "Self-test",
+          "args": [
+            "--self-test"
+          ],
+          "transcript": "shield-6"
+        }
+      ]
+    },
+    {
+      "id": "toolcall",
+      "session": "agents",
+      "title": "Stop the Tool Call",
+      "subtitle": "Demo 2 \u00b7 slide 22",
+      "blurb": "A Copilot Studio agent reads a poisoned vendor email and decides to send the vendor master list to a look-alike domain. Defender sees the tool call before it runs. Then the three ways it goes wrong: audit-only, no Entra agent ID, and the one-second fail-open.",
+      "kind": "run",
+      "script": "02-stop-the-tool-call/runtime_protection.py",
+      "variants": [
+        {
+          "label": "Custom block rule",
+          "args": [
+            "--fast"
+          ],
+          "primary": true,
+          "transcript": "toolcall-0"
+        },
+        {
+          "label": "Default rule (audit)",
+          "args": [
+            "--rule",
+            "audit",
+            "--fast"
+          ],
+          "highlight": true,
+          "transcript": "toolcall-1"
+        },
+        {
+          "label": "No Entra agent ID",
+          "args": [
+            "--no-agent-id",
+            "--fast"
+          ],
+          "transcript": "toolcall-2"
+        },
+        {
+          "label": "Late reply: fail-open",
+          "args": [
+            "--latency",
+            "1400",
+            "--fast"
+          ],
+          "transcript": "toolcall-3"
+        },
+        {
+          "label": "Late reply: fail-closed",
+          "args": [
+            "--latency",
+            "1400",
+            "--error-behavior",
+            "block",
+            "--fast"
+          ],
+          "transcript": "toolcall-4"
+        },
+        {
+          "label": "Benign control",
+          "args": [
+            "--benign",
+            "--fast"
+          ],
+          "transcript": "toolcall-5"
+        },
+        {
+          "label": "Self-test",
+          "args": [
+            "--self-test"
+          ],
+          "transcript": "toolcall-6"
+        }
+      ]
+    },
+    {
+      "id": "endpoint",
+      "session": "agents",
+      "title": "The Agent on Your Laptop",
+      "subtitle": "Demo 3 \u00b7 slide 24",
+      "blurb": "A coding agent reads a README with an instruction hidden in invisible Unicode. Defender for Endpoint AI agent runtime protection in Block, Audit and Disabled - plus the documented preview issue that shows why inspection happens at more than one point.",
+      "kind": "run",
+      "script": "03-agent-on-the-endpoint/local_agent_protection.py",
+      "variants": [
+        {
+          "label": "Block mode",
+          "args": [
+            "--fast"
+          ],
+          "primary": true,
+          "transcript": "endpoint-0"
+        },
+        {
+          "label": "Audit mode",
+          "args": [
+            "--mode",
+            "audit",
+            "--fast"
+          ],
+          "highlight": true,
+          "transcript": "endpoint-1"
+        },
+        {
+          "label": "Disabled",
+          "args": [
+            "--mode",
+            "disabled",
+            "--fast"
+          ],
+          "transcript": "endpoint-2"
+        },
+        {
+          "label": "Agent ignores the block",
+          "args": [
+            "--agent-continues",
+            "--fast"
+          ],
+          "transcript": "endpoint-3"
+        },
+        {
+          "label": "Self-test",
+          "args": [
+            "--self-test"
+          ],
+          "transcript": "endpoint-4"
+        }
+      ]
+    },
+    {
+      "id": "posture",
+      "session": "agents",
+      "title": "Find Every Agent",
+      "subtitle": "Demo 4 \u00b7 slide 27",
+      "blurb": "An AgentsInfo export scored the way the Defender portal's AI agents view does - risk levels and risk indicators by their Learn names - plus the protection gaps posture alone does not show you.",
+      "kind": "run",
+      "script": "04-find-every-agent/agent_posture.py",
+      "variants": [
+        {
+          "label": "Inventory and risk",
+          "args": [
+            "--fast"
+          ],
+          "primary": true,
+          "transcript": "posture-0"
+        },
+        {
+          "label": "Protection gaps only",
+          "args": [
+            "--gaps",
+            "--fast"
+          ],
+          "highlight": true,
+          "transcript": "posture-1"
+        },
+        {
+          "label": "Drill into Vendor Desk",
+          "args": [
+            "--agent",
+            "Vendor Desk"
+          ],
+          "transcript": "posture-2"
+        },
+        {
+          "label": "The KQL behind it",
+          "args": [
+            "--kql"
+          ],
+          "transcript": "posture-3"
+        },
+        {
+          "label": "Self-test",
+          "args": [
+            "--self-test"
+          ],
+          "transcript": "posture-4"
+        }
+      ]
+    },
+    {
+      "id": "hunt",
+      "session": "agents",
+      "title": "Hunt the Agent Kill Chain",
+      "subtitle": "Demo 5 \u00b7 slide 29",
+      "blurb": "Five advanced hunting queries over a synthetic week: AI alerts, real-time protection behaviors, what an audited agent did next, the attacker's IP pivot, and the posture debt that turned into an incident.",
+      "kind": "run",
+      "script": "05-hunt-the-agent-kill-chain/hunt_agents.py",
+      "variants": [
+        {
+          "label": "Full hunt",
+          "args": [
+            "--fast"
+          ],
+          "primary": true,
+          "transcript": "hunt-0"
+        },
+        {
+          "label": "Hunt 3: after the audit",
+          "args": [
+            "--hunt",
+            "3",
+            "--fast"
+          ],
+          "highlight": true,
+          "transcript": "hunt-1"
+        },
+        {
+          "label": "Hunt 4: IP pivot",
+          "args": [
+            "--hunt",
+            "4",
+            "--fast"
+          ],
+          "transcript": "hunt-2"
+        },
+        {
+          "label": "KQL only (to paste)",
+          "args": [
+            "--kql"
+          ],
+          "transcript": "hunt-3"
+        },
+        {
+          "label": "Self-test",
+          "args": [
+            "--self-test"
+          ],
+          "transcript": "hunt-4"
+        }
+      ]
+    },
+    {
+      "id": "redteam",
+      "session": "agents",
+      "title": "Red-Team Your Agent",
+      "subtitle": "Demo 6 \u00b7 slide 30",
+      "blurb": "Twelve attacks and two benign controls through four layers, scored as Attack Success Rate. It reports what gets through on purpose: Crescendo, non-English, and the polite injection to a domain nobody has seen yet.",
+      "kind": "run",
+      "script": "06-red-team-your-agent/red_team_agent.py",
+      "variants": [
+        {
+          "label": "All four layers",
+          "args": [
+            "--fast"
+          ],
+          "primary": true,
+          "transcript": "redteam-0"
+        },
+        {
+          "label": "Document shields off (default)",
+          "args": [
+            "--doc-shields-off",
+            "--fast"
+          ],
+          "highlight": true,
+          "transcript": "redteam-1"
+        },
+        {
+          "label": "Prompt Shields alone",
+          "args": [
+            "--only",
+            "L1",
+            "--fast"
+          ],
+          "transcript": "redteam-2"
+        },
+        {
+          "label": "Why each payload matters",
+          "args": [
+            "--verbose",
+            "--fast"
+          ],
+          "transcript": "redteam-3"
+        },
+        {
+          "label": "Self-test",
+          "args": [
+            "--self-test"
+          ],
+          "transcript": "redteam-4"
+        }
+      ]
+    }
+  ]
+}

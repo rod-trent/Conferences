@@ -1,0 +1,16 @@
+[2m==============================================================================[0m
+[1m Demo 02 self-test[0m
+[2m==============================================================================[0m
+
+  [32m[PASS][0m attack + block rule -> SendEmail blocked
+  [32m[PASS][0m attack + block rule -> ReadMailbox and LookupVendor still ran
+  [32m[PASS][0m attack -> Unsafe email domain detected
+  [32m[PASS][0m attack -> Malicious content propagation detected
+  [32m[PASS][0m default rule -> audited, tool runs
+  [32m[PASS][0m no Entra agent ID -> cannot be scoped, falls to audit
+  [32m[PASS][0m late reply + default error behavior -> fail-open
+  [32m[PASS][0m late reply + 'Block the query' -> blocked
+  [32m[PASS][0m benign control -> all tools run, nothing recorded
+  [32m[PASS][0m webhook body has the four documented sections
+
+[32m  10/10 checks passed[0m

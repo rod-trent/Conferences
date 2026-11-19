@@ -1,0 +1,16 @@
+[2m==============================================================================[0m
+[1m Demo 01 self-test[0m
+[2m==============================================================================[0m
+
+  [32m[PASS][0m jailbreak + block -> BlockedAttempt alert
+  [32m[PASS][0m jailbreak + annotate-only -> DetectedAttempt alert
+  [32m[PASS][0m smuggled text is invisible to a human
+  [32m[PASS][0m ASCII smuggling -> ASCIISmuggling alert
+  [32m[PASS][0m document attack -> indirect_attack.detected
+  [32m[PASS][0m document attack -> user prompt itself is clean
+  [32m[PASS][0m benign control -> no alerts
+  [32m[PASS][0m benign control -> no document detection
+  [32m[PASS][0m standalone API shape caps documents at five
+  [32m[PASS][0m alert types match Learn naming
+
+[32m  10/10 checks passed[0m

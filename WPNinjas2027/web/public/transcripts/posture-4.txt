@@ -1,0 +1,15 @@
+[2m==============================================================================[0m
+[1m Demo 04 self-test[0m
+[2m==============================================================================[0m
+
+  [32m[PASS][0m deleted agents are excluded
+  [32m[PASS][0m arg_max keeps the latest record per agent
+  [32m[PASS][0m Vendor Desk is High (XPIA exposure + privileged + active threat)
+  [32m[PASS][0m Trail Concierge flags the MCP allowed-tools recommendation
+  [32m[PASS][0m Release Notes Writer has no known risk
+  [32m[PASS][0m HR Policy Bot has Weak Instructions
+  [32m[PASS][0m Invoice Matcher gap: no Entra agent ID
+  [32m[PASS][0m local agent is Not evaluated
+  [32m[PASS][0m every level used is a Learn risk level
+
+[32m  9/9 checks passed[0m

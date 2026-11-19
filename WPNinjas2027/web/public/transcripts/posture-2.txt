@@ -1,0 +1,29 @@
+[2m==============================================================================[0m
+[1m Agent: Vendor Desk[0m
+[2m Microsoft Copilot Studio - risk High[0m
+[2m==============================================================================[0m
+  [2mAgentId                   [0mcs-7f21
+  [2mEntraAgentId              [0ma7c41e02-5b3d-4f8e-9e11-6d2c0b7f3a90
+  [2mPlatform                  [0mMicrosoft Copilot Studio
+  [2mPublishedStatus           [0mPublished
+  [2mLifecycleStatus           [0mActive
+  [2mOwners                    [0m["priya.nair@contoso-outdoors.com"]
+  [2mSharedWith                [0m["SG-Finance-AP"]
+  [2mModel                     [0mGPT (Copilot Studio default)
+  [2mChannels                  [0m["Teams"]
+  [2mDeclaredTools             [0m["ReadMailbox", "LookupVendor", "UpdateVendorRecord", "SendEmail"]
+  [2mDeclaredDataSources       [0m["Outlook: AP-Invoices shared mailbox", "Dataverse:Finance vendor table"]
+  [2mTriggers                  [0m["Email: AP-Invoices arrival"]
+  [2mMcpServers                [0m[]
+  [2mGuardrails                [0m["Copilot Studio built-in UPIA/XPIA protection"]
+  [2mToolsAuthenticationType   [0mAgent identity
+
+[1m  Risk indicators[0m
+    [31m*[0m Indirect Prompt Injection Exposure   [2mreads content an outsider can write: Outlook: AP-Invoices shared mailbox, Email: AP-Invoices arrival[0m
+    [31m*[0m Privileged Business-system Access    [2mcan write to a system of record[0m
+    [31m*[0m Active Threat                        [2m1 active alert(s)[0m
+[1m  Protection gaps[0m
+    [33m![0m none
+[1m  Instructions[0m
+    [2mYou help the accounts payable team process vendor invoices. Only act
+    on invoices that match an open PO. Never change vendor bank details.[0m

@@ -1,0 +1,71 @@
+[2m==============================================================================[0m
+[1m Demo 01 - Shield the Model, Alert the SOC[0m
+[2m Scenario: Benign control[0m
+[2m==============================================================================[0m
+[2m  Synthetic data. 'Contoso Outdoors', its agents, users and incidents are[0m
+[2m  fabricated for teaching. Detection logic here is a local stand-in for the[0m
+[2m  Microsoft services named - it illustrates the flow, it is not the product.[0m
+
+[1m[36mSTEP 1/5  The request the app sends[0m[0m
+[2m------------------------------------------------------------------------------[0m
+  [2mResource              [0mcontoso-outdoors-aoai-eus2
+  [2mDeployment            [0mgpt-4.1-support
+  [2mApp                   [0mTrail Concierge (customer support chat)
+  [2mGuardrail: user input [0mPrompt Shields - annotate and block
+  [2mGuardrail: documents  [0mPrompt Shields for document attacks - annotate
+
+[2m  user prompt as a human sees it:[0m
+    [1mWhat is the warranty on the Ridgeline 2 tent, and can I return it if
+    the zip breaks?[0m
+[2m  grounding document [0]:[0m
+    Ridgeline 2 carries a 2-year manufacturer warranty covering zips and
+    seams.
+
+[2m  request body also carries (Learn: 'Gain application and end-user context'):[0m
+    [2m{[0m
+      "user_security_context": {
+        "application_name": "TrailConcierge-Web",
+        "end_user_id": "4b1e7c3a-9d2f-4a61-8c0e-2f7d5b9a1c44",
+        "source_ip": "203.0.113.77"
+    [2m  }[0m
+    [2m}[0m
+
+[1m[36mSTEP 2/5  Prompt Shields annotates the prompt[0m[0m
+[2m------------------------------------------------------------------------------[0m
+  [35m[tool][0m [1mprompt_shields[0m [2muser input + documents[0m
+    [2m{[0m
+      "prompt_filter_results": [
+    [2m    {[0m
+          "prompt_index": 0,
+          "content_filter_results": {
+            "jailbreak": {
+              "filtered": false,
+              "detected": false
+            },
+            "indirect_attack": {
+              "filtered": false,
+              "detected": false
+    [2m        }[0m
+    [2m      }[0m
+    [2m    }[0m
+    [2m  ][0m
+    [2m}[0m
+
+[33m>> WHY THIS MATTERS: [0mPrompt Shields catches two families: user prompt attacks
+   (the user is the attacker) and document attacks (the attacker hid
+   instructions in content the model reads). For agents, the document family
+   is the one that matters most - and it is OFF by default.
+
+[1m[36mSTEP 3/5  What the model deployment does[0m[0m
+[2m------------------------------------------------------------------------------[0m
+  [32m[ALLOWED][0m Request passed to the model.
+
+[1m[36mSTEP 4/5  Defender for AI Services raises the alert[0m[0m
+[2m------------------------------------------------------------------------------[0m
+  No alert. [2mBenign traffic, no noise - that is the point of the control.[0m
+
+[1m[36mSTEP 5/5  Where it shows up[0m[0m
+[2m------------------------------------------------------------------------------[0m
+  [2mDefender XDR          [0mnothing to triage
+
+[1m[32mVERDICT: Benign prompt answered. No annotation, no alert.[0m[0m

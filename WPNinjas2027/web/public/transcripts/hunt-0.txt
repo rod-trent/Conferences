@@ -1,0 +1,120 @@
+[2m==============================================================================[0m
+[1m Demo 05 - Hunt the Agent Kill Chain[0m
+[2m Defender XDR advanced hunting, 7 days, Contoso Outdoors[0m
+[2m==============================================================================[0m
+[2m  Synthetic data. 'Contoso Outdoors', its agents, users and incidents are[0m
+[2m  fabricated for teaching. Detection logic here is a local stand-in for the[0m
+[2m  Microsoft services named - it illustrates the flow, it is not the product.[0m
+
+[1m[36mSTEP 1/5  Every AI and agent alert this week[0m[0m
+[2m------------------------------------------------------------------------------[0m
+  [36mAlertInfo[0m
+  [36m| where Timestamp > ago(7d)[0m
+  [36m| where Title has_any ("Jailbreak", "ASCII Smuggling", "prompt injection",[0m
+  [36m                       "Anomalous tool invocation", "LLM Reconnaissance")[0m
+  [36m| project Timestamp, Title, Severity, ServiceSource, AlertId[0m
+  [36m| order by Timestamp asc[0m
+
+  [2mTimestamp             Title                                               Severity ServiceSource           [0m
+  2026-12-01T14:02:11Z  A Jailbreak attempt on an Azure AI model deployment Medium   Defender for Cloud      
+  2026-12-01T14:05:40Z  ASCII Smuggling prompt injection detected           High     Defender for Cloud      
+  2026-12-03T10:05:22Z  Suspicious AI prompt injection                      High     Defender for Endpoint   
+[2m  (3 rows)[0m
+
+[33m>> WHY THIS MATTERS: [0mModel-level alerts (Defender for AI Services) and
+   endpoint agent alerts (Defender for Endpoint) arrive in one table. Start
+   every agent hunt here - but do not stop here.
+
+[1m[36mSTEP 2/5  Real-time protection behaviors: blocked AND audited[0m[0m
+[2m------------------------------------------------------------------------------[0m
+  [36mBehaviorInfo[0m
+  [36m| where Timestamp > ago(7d)[0m
+  [36m| where Categories has "AI" or Title has "agent"     // confirm values in your tenant[0m
+  [36m| extend AgentId = tostring(AdditionalFields.AgentId),[0m
+  [36m         ConversationId = tostring(AdditionalFields.ConversationId),[0m
+  [36m         DetectionType = tostring(AdditionalFields.DetectionType)[0m
+  [36m| project Timestamp, ActionType, DetectionType, AgentId, ConversationId[0m
+
+  [2mTimestamp             ActionType  DetectionType                   AgentId   ConversationId[0m
+  2026-12-02T09:16:03Z  Blocked     Unsafe email domain             cs-7f21   conv-5521     
+  2026-12-02T11:41:27Z  Audited     Malicious content propagation   cs-9e88   conv-7730     
+[2m  (2 rows)[0m
+
+[33m>> WHY THIS MATTERS: [0mBlocked is a closed case. AUDITED means Defender saw it
+   and let it run - the agent had no custom block rule. Every Audited row is a
+   question: what did the tool do next?
+
+[1m[36mSTEP 3/5  What the agent actually did after an audited behavior[0m[0m
+[2m------------------------------------------------------------------------------[0m
+  [36mlet audited = BehaviorInfo[0m
+  [36m    | where Timestamp > ago(7d) and ActionType == "Audited"[0m
+  [36m    | project ConversationId = tostring(AdditionalFields.ConversationId);[0m
+  [36mCloudAppEvents[0m
+  [36m| where Timestamp > ago(7d)[0m
+  [36m| where ActionType in ("ExecuteToolBySDK", "ExecuteToolByGateway", "ExecuteToolByMCPServer")[0m
+  [36m| extend ConversationId = tostring(RawEventData.ConversationId),[0m
+  [36m         AgentId = tostring(RawEventData.AgentId)[0m
+  [36m| where ConversationId in (audited)[0m
+  [36m| project Timestamp, ConversationId, AgentId, Tool = RawEventData.ToolName,[0m
+  [36m          Target = RawEventData.Target, Result = RawEventData.Result[0m
+
+  [2mTimestamp             ConversationId  AgentId  Tool       Target                      Result   [0m
+  2026-12-02T11:41:09Z  conv-7730       cs-9e88  WebFetch   contoso-outdoors.com/promo  Success  
+  2026-12-02T11:41:29Z  conv-7730       cs-9e88  SendEmail  drop@paste-drop.io          Success  
+[2m  (2 rows)[0m
+
+[33m>> WHY THIS MATTERS: [0mThis is the finding. The audited SendEmail succeeded - to
+   a paste site. The alert was accurate and the data still left. Audit is
+   visibility, not protection.
+
+[1m[36mSTEP 4/5  Same attacker, other agents (pivot on IP)[0m[0m
+[2m------------------------------------------------------------------------------[0m
+  [36mlet attackerIPs = AlertEvidence[0m
+  [36m    | where Timestamp > ago(7d) and EntityType == "Ip"[0m
+  [36m    | distinct RemoteIP;[0m
+  [36mCloudAppEvents[0m
+  [36m| where Timestamp > ago(7d) and ActionType == "InvokeAgent"[0m
+  [36m| where IPAddress in (attackerIPs)[0m
+  [36m| summarize Invocations = count(), FirstSeen = min(Timestamp)[0m
+  [36m    by IPAddress, AgentId = tostring(RawEventData.AgentId)[0m
+
+  [2mIPAddress       AgentId  Invocations FirstSeen             AlertsFromIP[0m
+  203.0.113.77    fd-1a09  2           2026-12-01T14:01:50Z  2           
+  203.0.113.77    cs-9e88  2           2026-12-01T14:09:12Z  2           
+  203.0.113.77    cs-7f21  1           2026-12-01T14:10:44Z  2           
+[2m  (3 rows)[0m
+
+[33m>> WHY THIS MATTERS: [0mThe IP that jailbroke Trail Concierge also went shopping
+   for other agents. Prompt attacks are reconnaissance too - the end-user
+   context from demo 01 is what makes this pivot possible.
+
+[1m[36mSTEP 5/5  Enrich: who owns the agents involved, and can we block them?[0m[0m
+[2m------------------------------------------------------------------------------[0m
+  [36mAgentsInfo[0m
+  [36m| summarize arg_max(Timestamp, *) by AgentId[0m
+  [36m| where AgentId in ("cs-7f21", "fd-1a09", "cs-9e88")   // from hunts 2-4[0m
+  [36m| project AgentName, Platform, EntraAgentId, Owners, ToolsAuthenticationType[0m
+
+  [2mAgentName           Platform       EntraAgentId Owners                            ToolsAuth         [0m
+  Vendor Desk         Copilot Studio yes          priya.nair@contoso-outdoors.com   Agent identity    
+  Trail Concierge     Foundry        yes          marco.liu@contoso-outdoors.com    Managed identity  
+  Q3 Promo Bot        Copilot Studio NO           NONE                              Maker credentials 
+[2m  (3 rows)[0m
+
+[33m>> WHY THIS MATTERS: [0mThe agent that leaked is the one with no Entra agent ID,
+   no owner and the maker's mailbox. It could never have been put in a block
+   rule. Posture debt became an incident.
+
+[2m------------------------------------------------------------------------------[0m
+[1m  The campaign, assembled[0m
+  [2m2026-12-01 14:02[0m  [32m203.0.113.77 jailbreaks Trail Concierge (blocked by Prompt Shields)[0m
+  [2m2026-12-01 14:09[0m  same IP probes Q3 Promo Bot and Vendor Desk
+  [2m2026-12-02 09:15[0m  injected 'remittance' email reaches the AP mailbox
+  [2m2026-12-02 09:16[0m  [32mVendor Desk SendEmail to vendor-remit-portal.net -> BLOCKED (custom rule)[0m
+  [2m2026-12-02 11:40[0m  promo-page comment injects Q3 Promo Bot
+  [2m2026-12-02 11:41[0m  [31mQ3 Promo Bot SendEmail to paste-drop.io -> AUDITED, executed[0m
+  [2m2026-12-03 10:05[0m  [32mcode-agent on CO-DEV-LT-0412 blocked by Defender for Endpoint (unrelated repo)[0m
+
+[1m[31mVERDICT: One campaign, three agents. Two controls held; the gap was an agent nobody could scope.[0m[0m
+[2m  Actions: give Q3 Promo Bot an owner and Entra agent ID, or retire it; add it to a custom[0m
+[2m  block rule; rotate the maker's mailbox credentials; block 203.0.113.77.[0m

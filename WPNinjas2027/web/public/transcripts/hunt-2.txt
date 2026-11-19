@@ -1,0 +1,28 @@
+[2m==============================================================================[0m
+[1m Demo 05 - Hunt the Agent Kill Chain[0m
+[2m Defender XDR advanced hunting, 7 days, Contoso Outdoors[0m
+[2m==============================================================================[0m
+[2m  Synthetic data. 'Contoso Outdoors', its agents, users and incidents are[0m
+[2m  fabricated for teaching. Detection logic here is a local stand-in for the[0m
+[2m  Microsoft services named - it illustrates the flow, it is not the product.[0m
+
+[1m[36mSTEP 4/5  Same attacker, other agents (pivot on IP)[0m[0m
+[2m------------------------------------------------------------------------------[0m
+  [36mlet attackerIPs = AlertEvidence[0m
+  [36m    | where Timestamp > ago(7d) and EntityType == "Ip"[0m
+  [36m    | distinct RemoteIP;[0m
+  [36mCloudAppEvents[0m
+  [36m| where Timestamp > ago(7d) and ActionType == "InvokeAgent"[0m
+  [36m| where IPAddress in (attackerIPs)[0m
+  [36m| summarize Invocations = count(), FirstSeen = min(Timestamp)[0m
+  [36m    by IPAddress, AgentId = tostring(RawEventData.AgentId)[0m
+
+  [2mIPAddress       AgentId  Invocations FirstSeen             AlertsFromIP[0m
+  203.0.113.77    fd-1a09  2           2026-12-01T14:01:50Z  2           
+  203.0.113.77    cs-9e88  2           2026-12-01T14:09:12Z  2           
+  203.0.113.77    cs-7f21  1           2026-12-01T14:10:44Z  2           
+[2m  (3 rows)[0m
+
+[33m>> WHY THIS MATTERS: [0mThe IP that jailbroke Trail Concierge also went shopping
+   for other agents. Prompt attacks are reconnaissance too - the end-user
+   context from demo 01 is what makes this pivot possible.

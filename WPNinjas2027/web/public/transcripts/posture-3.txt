@@ -1,0 +1,30 @@
+[2m==============================================================================[0m
+[1m Demo 04 - the hunting queries behind the inventory[0m
+[2m Defender XDR > Advanced hunting[0m
+[2m==============================================================================[0m
+
+// 1. Latest state of every agent (the query on Microsoft Learn's AgentsInfo page)
+AgentsInfo
+| summarize arg_max(Timestamp, *) by AgentId
+| where LifecycleStatus != "Deleted"
+
+// 2. Published agents with no Entra agent ID - cannot be scoped into a block rule
+AgentsInfo
+| summarize arg_max(Timestamp, *) by AgentId
+| where LifecycleStatus == "Active" and PublishedStatus == "Published"
+| where isempty(EntraAgentId)
+| project AgentName, Platform, Owners, SharedWith
+
+// 3. Agents that read outsider-writable content AND can send it somewhere
+AgentsInfo
+| summarize arg_max(Timestamp, *) by AgentId
+| where tostring(DeclaredDataSources) has_any ("Outlook", "Web search", "Public website")
+   or tostring(Triggers) has_any ("Email", "GitHub issues")
+| where tostring(DeclaredTools) has_any ("SendEmail", "HttpRequest", "PostToWebhook", "ShareFile")
+| project AgentName, Platform, DeclaredDataSources, DeclaredTools, Owners
+
+// 4. Ownerless agents
+AgentsInfo
+| summarize arg_max(Timestamp, *) by AgentId
+| where LifecycleStatus == "Active" and array_length(Owners) == 0
+

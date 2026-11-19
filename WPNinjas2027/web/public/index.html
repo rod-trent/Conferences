@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Defender for Agents — WPNinjas US 2027 Demos</title>
+<meta name="description" content="Runnable demos for 'Defender for Agents: Extending Threat Protection to Autonomous Workflows' at Workplace Ninjas US 2027. Real Python, in the browser.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='26'>🛡️</text></svg>">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <div class="brand">
+      <img class="mark" src="assets/wpninjas-logo.svg" alt="Workplace Ninjas US" width="161" height="22">
+      <div>
+        <h1>Defender for Agents</h1>
+        <p class="event">Workplace Ninjas US <strong>2027</strong> · Scottsdale · 11–13 January</p>
+      </div>
+    </div>
+    <div class="topright">
+      <span id="engine" class="pill pill-wait" title="Python runtime status">
+        <span class="dot"></span><span id="engine-text">starting…</span>
+      </span>
+      <span class="scale" role="group" aria-label="Text size"></span>
+      <a class="ghost" href="https://github.com/rod-trent/Conferences/tree/main/WPNinjas2027" target="_blank" rel="noopener">Source</a>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="lede">
+    <p>
+      Six demos for <strong>Defender for Agents: Extending Threat Protection to Autonomous
+      Workflows</strong>. They run the <strong>actual code</strong> from the repository — real
+      Python, compiled to WebAssembly, executing in this tab. No tenant, no network calls,
+      nothing to install.
+    </p>
+    <p class="muted">
+      Every dataset is synthetic. "Contoso Outdoors", its agents, users and incidents are
+      fabricated for teaching. Product names, alert names, table names and settings follow
+      Microsoft Learn; the detection logic is a readable local stand-in for the services named.
+    </p>
+  </section>
+
+  <nav class="sessionnav" id="sessionnav"></nav>
+
+  <div id="sessions"></div>
+
+  <footer class="foot">
+    <p>
+      Built from <a href="https://github.com/rod-trent/Conferences/tree/main/WPNinjas2027" target="_blank" rel="noopener">rod-trent/Conferences · WPNinjas2027</a>.
+      The site is rebuilt from the demo sources, and the test run fails if the two drift apart.
+    </p>
+    <p class="muted" id="footnote"></p>
+  </footer>
+
+</main>
+
+<!-- Runner ------------------------------------------------------------- -->
+<div class="runner" id="runner" hidden>
+  <div class="runner-box" role="dialog" aria-modal="true" aria-labelledby="run-title">
+    <div class="runner-head">
+      <div>
+        <h2 id="run-title"></h2>
+        <p id="run-sub" class="muted"></p>
+      </div>
+      <button class="close" id="run-close" aria-label="Close">✕</button>
+    </div>
+
+    <div class="runner-bar">
+      <div class="variants" id="run-variants"></div>
+      <div class="runner-actions">
+        <span class="scale" role="group" aria-label="Text size"></span>
+        <label class="chk" title="Where playback stops so you can talk">
+          pause
+          <select id="opt-pause">
+            <option value="beats">at stages</option>
+            <option value="steps">at every step</option>
+            <option value="off">never</option>
+          </select>
+        </label>
+        <label class="chk"><input type="checkbox" id="opt-animate" checked> animate</label>
+        <button class="ghost" id="run-copy">Copy output</button>
+      </div>
+    </div>
+
+    <pre class="term" id="run-term" tabindex="0"><span class="muted">Pick a run above.</span></pre>
+
+    <div class="video-wrap" id="run-video-wrap" hidden>
+      <video id="run-video" controls muted preload="none" playsinline></video>
+    </div>
+
+    <div class="runner-foot">
+      <span id="run-status" class="muted"></span>
+      <span id="run-cmd" class="cmd"></span>
+    </div>
+  </div>
+</div>
+
+<script src="assets/ansi.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>
