@@ -81,7 +81,15 @@ Everything under `public/py`, `public/transcripts` and `public/data` is
 
 The site is committed pre-built. `ELDK/vercel.json` points `outputDirectory` at `web/public` and has no build step. `.vercelignore` keeps the deck and the tooling out of the upload.
 
-The intended project is **`eldk2027-demos`**, connected to `rod-trent/Conferences` with **Root Directory = `ELDK`** so that every push to `main` redeploys it. The deck's QR codes point at `eldk2027-demos.vercel.app`. If that name is taken, regenerate `deck/build/qr-demo-site.png` and update `DEMO_SITE` in `deck/build/deck.js`.
+The Vercel project **`eldk2027-demos`** is connected to `rod-trent/Conferences` with **Root Directory = `ELDK`**, so **every push to `main` redeploys production**. The deck's QR codes point at `eldk2027-demos.vercel.app`.
+
+To deploy by hand, run this from the **repo root**. The repo root's `.vercel` link belongs to the WPNinjas project, so pass this project's ids:
+
+```bash
+VERCEL_ORG_ID=team_NfjmdhUYN3lWcsTGFcCqCRg7 VERCEL_PROJECT_ID=prj_Lp5hKtVKKCK1nz2sCH2LLGxgpFEi npx vercel deploy --prod
+```
+
+Per-deployment URLs (`…-<hash>-<team>.vercel.app`) sit behind Vercel Authentication. The production alias is public.
 
 After changing a demo:
 
@@ -89,4 +97,5 @@ After changing a demo:
 cd ELDK
 python web/build.py              # regenerate public/
 python run-all-tests.py          # must be green - the drift check guards the site
+git commit -am "..." && git push # Vercel deploys main
 ```
