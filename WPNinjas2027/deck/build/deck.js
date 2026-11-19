@@ -21,7 +21,8 @@ const SPEAKERS = [
             ["FaXTwitter", "@rodtrent", "https://x.com/rodtrent"],
             ["FaGithub", "github.com/rod-trent", "https://github.com/rod-trent"]] },
   { name: "Edward Walton", title: "Sr Solution Engineer, Microsoft\nCreator of The AI Security Insights podcast", photo: "edward.png",
-    links: [["FaLinkedin", "linkedin.com/in/waltonedward", "https://www.linkedin.com/in/waltonedward/"]] },
+    links: [["FaLinkedin", "linkedin.com/in/waltonedward", "https://www.linkedin.com/in/waltonedward/"],
+            ["FaPodcast", "microsoftsecurityinsights.com", "https://www.microsoftsecurityinsights.com/"]] },
 ];
 const SPEAKER_NAMES = SPEAKERS.map(p => p.name).join("  ·  ");
 
